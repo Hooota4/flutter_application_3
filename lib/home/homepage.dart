@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 const UserAccountsDrawerHeader(
                     currentAccountPicture: CircleAvatar(
-                      backgroundColor: Color.fromARGB(255, 11, 101, 58),
+                      // backgroundColor: Color.fromARGB(255, 11, 101, 58),
                       child: Text("E"),
                     ),
                     accountName: Text("Ebtega osman"),
@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
+        // backgroundColor: Colors.blue,
         onPressed: () {
           Navigator.of(context).pushReplacementNamed("createadver");
 
