@@ -1,18 +1,16 @@
-import 'package:flutter_application_3/add/CreateAdver.dart';
-import 'package:flutter_application_3/autho/login.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/autho/singup.dart';
-import 'package:flutter_application_3/home/homepage.dart';
-// ignore: duplicate_import
-import 'package:flutter_application_3/add/CreateAdver.dart';
 // ignore: unused_import
 import 'package:flutter_application_3/Admin/LoginAdmin.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_application_3/add/CreateAdver.dart';
+import 'package:flutter_application_3/home/homepage.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'auth/views/login.dart';
+import 'auth/views/singup.dart';
 import 'splash/splash_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -44,10 +42,3 @@ class MyApp extends StatelessWidget {
   }
 }
 //google_maps_flutter: ^1.2.0
-
-        
-
-    
-
-  
-

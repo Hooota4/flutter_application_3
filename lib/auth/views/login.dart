@@ -27,19 +27,19 @@ class _LoginState extends State<Login> {
                   children: [
                     TextFormField(
                       decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.person),
-                          hintText: "Phone",
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(width: 1))),
+                        prefixIcon: Icon(Icons.person),
+                        hintText: "Phone",
+                        border: OutlineInputBorder(borderSide: BorderSide(width: 1)),
+                      ),
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
                       obscureText: true,
                       decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.person),
-                          hintText: "Password",
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(width: 1))),
+                        prefixIcon: Icon(Icons.person),
+                        hintText: "Password",
+                        border: OutlineInputBorder(borderSide: BorderSide(width: 1)),
+                      ),
                     ),
                     Container(
                         margin: const EdgeInsets.all(10),
@@ -50,27 +50,15 @@ class _LoginState extends State<Login> {
                               onTap: () {
                                 Navigator.of(context).pushNamed("singup");
                               },
-                              child: const Text(
-                                "Click Here",
-                                // style: TextStyle(
-                                //     color: Color.fromARGB(255, 10, 138, 243)),
-                              ),
+                              child: const Text("Click Here"),
                             ),
                           ],
                         )),
                     ElevatedButton(
-                      // style: ElevatedButton.styleFrom(
-                      //   backgroundColor:
-                      //       const Color.fromARGB(255, 10, 138, 243),
-                      //   foregroundColor: Colors.white,
-                      // ),
                       onPressed: () {
                         Navigator.of(context).pushReplacementNamed("homepage");
                       },
-                      child: const Text(
-                        "Sing in",
-                        style: TextStyle(fontSize: 20),
-                      ),
+                      child: const Text("Sing in", style: TextStyle(fontSize: 20)),
                     ),
                   ],
                 )),
