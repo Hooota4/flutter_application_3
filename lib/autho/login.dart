@@ -11,7 +11,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(248, 248, 249, 1),
+      // backgroundColor: const Color.fromRGBO(248, 248, 249, 1),
       body: ListView(
         children: [
           Column(
@@ -52,18 +52,18 @@ class _LoginState extends State<Login> {
                               },
                               child: const Text(
                                 "Click Here",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 10, 138, 243)),
+                                // style: TextStyle(
+                                //     color: Color.fromARGB(255, 10, 138, 243)),
                               ),
                             ),
                           ],
                         )),
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 10, 138, 243),
-                        foregroundColor: Colors.white,
-                      ),
+                      // style: ElevatedButton.styleFrom(
+                      //   backgroundColor:
+                      //       const Color.fromARGB(255, 10, 138, 243),
+                      //   foregroundColor: Colors.white,
+                      // ),
                       onPressed: () {
                         Navigator.of(context).pushReplacementNamed("homepage");
                       },
