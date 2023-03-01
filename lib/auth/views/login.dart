@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/auth/controller/auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Login extends StatefulWidget {
+class Login extends ConsumerStatefulWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  ConsumerState<Login> createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends ConsumerState<Login> {
+  late final TextEditingController _phone;
+  late final TextEditingController _password;
+
+  @override
+  void initState() {
+    _phone = TextEditingController();
+    _password = TextEditingController();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,20 +39,14 @@ class _LoginState extends State<Login> {
                     child: Column(
                   children: [
                     TextFormField(
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        hintText: "Phone",
-                        border: OutlineInputBorder(borderSide: BorderSide(width: 1)),
-                      ),
+                      controller: _phone,
+                      decoration: const InputDecoration(prefixIcon: Icon(Icons.person), hintText: "Phone"),
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
+                      controller: _password,
                       obscureText: true,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        hintText: "Password",
-                        border: OutlineInputBorder(borderSide: BorderSide(width: 1)),
-                      ),
+                      decoration: const InputDecoration(prefixIcon: Icon(Icons.password), hintText: "Password"),
                     ),
                     Container(
                         margin: const EdgeInsets.all(10),
@@ -54,12 +61,22 @@ class _LoginState extends State<Login> {
                             ),
                           ],
                         )),
-                    ElevatedButton(
-                      onPressed: () {
+                    Consumer(builder: (context, ref, child) {
+                      if (ref.watch(authControllerProvider).isLoggedIn ?? false) {
                         Navigator.of(context).pushReplacementNamed("homepage");
-                      },
-                      child: const Text("Sing in", style: TextStyle(fontSize: 20)),
-                    ),
+                      }
+                      return ElevatedButton(
+                        onPressed: () {
+                          ref //
+                              .read(authControllerProvider.notifier) //
+                              .login(
+                                username: _phone.text.trim(),
+                                password: _password.text.trim(),
+                              );
+                        },
+                        child: const Text("Sing in", style: TextStyle(fontSize: 20)),
+                      );
+                    }),
                   ],
                 )),
               ),

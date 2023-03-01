@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/auth/controller/auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -25,25 +24,7 @@ class SplashScreen extends ConsumerWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    ref.read(authControllerProvider.notifier).login(
-                          username: "aboidrees",
-                          password: 'P@ssw0rd',
-                        );
-
-                    // ref.read(authControllerProvider.notifier).register(const User(
-                    //       first_name: "first_name",
-                    //       second_name: "second_name",
-                    //       thired_name: "thired_name",
-                    //       forth_name: "forth_name",
-                    //       national_number: "456456456456456",
-                    //       phone: "456456456456",
-                    //       email: "email@mail.com",
-                    //       username: "username",
-                    //       password: "password",
-                    //       state: "state",
-                    //       city: "city",
-                    //     ));
-                    // Navigator.of(context).pushReplacementNamed("login");
+                    Navigator.of(context).pushReplacementNamed("login");
                   },
                   child: Text(
                     "English",

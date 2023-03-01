@@ -20,15 +20,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: const SplashScreen(),
-      // theme: ThemeData(
-      //   fontFamily: GoogleFonts.lexend().fontFamily,
-      //   colorScheme: ColorScheme.light().copyWith(
-      //       // primary: Colors.grey,
-      //       ),
-      //   useMaterial3: true,
-      // ),
-      theme: ThemeData.dark(
+      theme: ThemeData(
+        //   fontFamily: GoogleFonts.lexend().fontFamily,
+        //   colorScheme: ColorScheme.light().copyWith(
+        //       // primary: Colors.grey,
+        //       ),
         useMaterial3: true,
+      ),
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeData.dark(
+        useMaterial3: true,
+      ).copyWith(
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(borderSide: BorderSide(width: 1)),
+        ),
       ),
       debugShowCheckedModeBanner: false,
       routes: {

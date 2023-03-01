@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_application_3/auth/models/auth_model.dart';
+import 'package:flutter_application_3/auth/models/response_model.dart';
 import 'package:flutter_application_3/auth/models/user_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -14,12 +15,15 @@ class AuthController extends _$AuthController {
 
   void login({required String username, required String password}) async {
     try {
-      final token = await dio.post<String>(
+      final res = await dio.post(
         '/login',
         data: FormData.fromMap({'username': username, 'password': password}),
       );
-      state = Auth(token: token.data, isLoggedIn: true, user: null);
-      print(state);
+
+      final data = ResponseModel.fromJson(res.data).data;
+      if (data != null) {
+        state = Auth(token: data['token'], isLoggedIn: true, user: null);
+      }
     } catch (e) {
       return;
     }
@@ -27,12 +31,15 @@ class AuthController extends _$AuthController {
 
   void register(User user) async {
     try {
-      final token = await dio.post<String>(
+      final res = await dio.post(
         '/register',
         data: FormData.fromMap(user.toJson()),
       );
-      state = Auth(token: token.data, isLoggedIn: true, user: null);
-      print(state);
+
+      final data = ResponseModel.fromJson(res.data).data;
+      if (data != null) {
+        state = Auth(token: data['token'], isLoggedIn: true, user: null);
+      }
     } catch (e) {
       return;
     }
