@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/auth/controller/auth.dart';
+import 'package:flutter_application_3/auth/models/user_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SingUp extends StatefulWidget {
+class SingUp extends ConsumerStatefulWidget {
   const SingUp({Key? key}) : super(key: key);
 
   @override
-  State<SingUp> createState() => _SingUpState();
+  ConsumerState<SingUp> createState() => SingUpState();
 }
 
-class _SingUpState extends State<SingUp> {
+class SingUpState extends ConsumerState<SingUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,88 +28,120 @@ class _SingUpState extends State<SingUp> {
             Container(
               padding: const EdgeInsets.all(20),
               child: Form(
-                  child: Column(
-                children: [
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        hintText: "Enter Name",
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 1))),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        hintText: "Phone",
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 1))),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.phone),
-                        hintText: "National Id",
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 1))),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.block),
-                        hintText: "Password",
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 1))),
-                  ),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        hintText: "Re_Enter Password",
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 1))),
-                  ),
-
-                  Container(
-                      margin: const EdgeInsets.all(10),
-                      child: Row(children: [
-                        const Text("if you have account "),
-                        InkWell(
-                          onTap: () {
-                            Navigator.of(context).pushNamed("login");
-                          },
-                          child: const Text(
-                            "Click Here",
-                            // style: TextStyle(color:Color.fromARGB(255, 10, 138, 243)),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            decoration: const InputDecoration(prefixIcon: Icon(Icons.person), hintText: "First Name"),
                           ),
                         ),
-                      ])),
-
-                  //SizedBox(
-                  // height: MediaQuery.of(context).size.height,
-                  // width: MediaQuery.of(context).size.width,
-                  //child: ElevatedButton(
-                  //onPressed: () {  },
-                  // child: Text('button'),),
-                  ElevatedButton(
-                    // style: ElevatedButton.styleFrom(
-                    //   backgroundColor:
-                    //       const Color.fromARGB(255, 10, 138, 243),
-                    //   foregroundColor: Colors.white,
-                    // ),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed("homepage");
-                    },
-                    child: const Text(
-                      "Create Account",
-                      style: TextStyle(fontSize: 15),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: TextFormField(
+                            decoration: const InputDecoration(prefixIcon: Icon(Icons.person), hintText: "Second Name"),
+                          ),
+                        ),
+                      ],
                     ),
-                  )
-                  // ),
-                ],
-              )),
+                    const SizedBox(height: 16),
+
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            decoration: const InputDecoration(prefixIcon: Icon(Icons.person), hintText: "Third Name"),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: TextFormField(
+                            decoration: const InputDecoration(prefixIcon: Icon(Icons.person), hintText: "Fourth Name"),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      decoration: const InputDecoration(prefixIcon: Icon(Icons.phone), hintText: "Enter Phone Number"),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      decoration: const InputDecoration(prefixIcon: Icon(Icons.credit_card_outlined), hintText: "Enter National ID"),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      decoration: const InputDecoration(prefixIcon: Icon(Icons.email), hintText: "Enter Email"),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      decoration: const InputDecoration(prefixIcon: Icon(Icons.verified_user), hintText: "Enter Username"),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      obscureText: true,
+                      decoration: const InputDecoration(prefixIcon: Icon(Icons.password), hintText: "Enter Password"),
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      obscureText: true,
+                      decoration: const InputDecoration(prefixIcon: Icon(Icons.password), hintText: "Repeat Password"),
+                    ),
+
+                    Container(
+                      margin: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          const Text("if you have account "),
+                          InkWell(
+                            onTap: () => Navigator.of(context).pushNamed("login"),
+                            child: const Text("Click Here"),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    //SizedBox(
+                    // height: MediaQuery.of(context).size.height,
+                    // width: MediaQuery.of(context).size.width,
+                    //child: ElevatedButton(
+                    //onPressed: () {  },
+                    // child: Text('button'),),
+                    ElevatedButton(
+                      // style: ElevatedButton.styleFrom(
+                      //   backgroundColor:
+                      //       const Color.fromARGB(255, 10, 138, 243),
+                      //   foregroundColor: Colors.white,
+                      // ),
+                      onPressed: () {
+                        ref.read(authControllerProvider.notifier).register(const User(
+                              first_name: "first_name",
+                              second_name: "second_name",
+                              thired_name: "thired_name",
+                              forth_name: "forth_name",
+                              national_number: "456456456456456",
+                              phone: "456456456456",
+                              email: "email@mail.com",
+                              username: "username",
+                              password: "password",
+                              state: "state",
+                              city: "city",
+                            ));
+                        Navigator.of(context).pushNamed("homepage");
+                      },
+                      child: const Text(
+                        "Create Account",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
+                    // ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
