@@ -11,151 +11,262 @@ class SingUp extends ConsumerStatefulWidget {
 }
 
 class SingUpState extends ConsumerState<SingUp> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  late TextEditingController _firstName;
+  late TextEditingController _secondName;
+  late TextEditingController _thirdName;
+  late TextEditingController _forthName;
+
+  late TextEditingController _phoneNumber;
+  late TextEditingController _nationalId;
+  late TextEditingController _email;
+  late TextEditingController _username;
+  late TextEditingController _password;
+  late TextEditingController _rePassword;
+  late TextEditingController _state;
+  late TextEditingController _city;
+
+  @override
+  void initState() {
+    _firstName = TextEditingController();
+    _secondName = TextEditingController();
+    _thirdName = TextEditingController();
+    _forthName = TextEditingController();
+
+    _phoneNumber = TextEditingController();
+    _nationalId = TextEditingController();
+    _email = TextEditingController();
+    _username = TextEditingController();
+    _password = TextEditingController();
+    _rePassword = TextEditingController();
+    _state = TextEditingController();
+    _city = TextEditingController();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _firstName.dispose();
+    _secondName.dispose();
+    _thirdName.dispose();
+    _forthName.dispose();
+
+    _phoneNumber.dispose();
+    _nationalId.dispose();
+    _email.dispose();
+    _username.dispose();
+    _password.dispose;
+    _rePassword.dispose;
+    _state.dispose();
+    _city.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: Color.fromARGB(255, 249, 249, 250),
-        body: ListView(
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Center(child:
-
-            // Image.asset("image/logo.jpg"
-            //),
-            // ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Form(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            decoration: const InputDecoration(prefixIcon: Icon(Icons.person), hintText: "First Name"),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: TextFormField(
-                            decoration: const InputDecoration(prefixIcon: Icon(Icons.person), hintText: "Second Name"),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            decoration: const InputDecoration(prefixIcon: Icon(Icons.person), hintText: "Third Name"),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: TextFormField(
-                            decoration: const InputDecoration(prefixIcon: Icon(Icons.person), hintText: "Fourth Name"),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      decoration: const InputDecoration(prefixIcon: Icon(Icons.phone), hintText: "Enter Phone Number"),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      decoration: const InputDecoration(prefixIcon: Icon(Icons.credit_card_outlined), hintText: "Enter National ID"),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      decoration: const InputDecoration(prefixIcon: Icon(Icons.email), hintText: "Enter Email"),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      decoration: const InputDecoration(prefixIcon: Icon(Icons.verified_user), hintText: "Enter Username"),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: const InputDecoration(prefixIcon: Icon(Icons.password), hintText: "Enter Password"),
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: const InputDecoration(prefixIcon: Icon(Icons.password), hintText: "Repeat Password"),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: const InputDecoration(prefixIcon: Icon(Icons.password), hintText: "Enter State"),
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: const InputDecoration(prefixIcon: Icon(Icons.password), hintText: "Enter City"),
-                    ),
-
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      child: Row(
+      body: ListView(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(20),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text("if you have account "),
-                          InkWell(
-                            onTap: () => Navigator.of(context).pushNamed("login"),
-                            child: const Text("Click Here"),
+                          Expanded(
+                            child: TextFormField(
+                              controller: _firstName,
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "First Name",
+                              ),
+                              validator: (value) => value?.isEmpty ?? true ? "Enter first name please" : null,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: TextFormField(
+                              controller: _secondName,
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Second Name",
+                              ),
+                              validator: (value) => value?.isEmpty ?? true ? "Enter second name please" : null,
+                            ),
                           ),
                         ],
                       ),
-                    ),
+                      const SizedBox(height: 16),
 
-                    //SizedBox(
-                    // height: MediaQuery.of(context).size.height,
-                    // width: MediaQuery.of(context).size.width,
-                    //child: ElevatedButton(
-                    //onPressed: () {  },
-                    // child: Text('button'),),
-                    ElevatedButton(
-                      // style: ElevatedButton.styleFrom(
-                      //   backgroundColor:
-                      //       const Color.fromARGB(255, 10, 138, 243),
-                      //   foregroundColor: Colors.white,
-                      // ),
-                      onPressed: () {
-                        ref.read(authControllerProvider.notifier).register(const User(
-                              first_name: "first_name",
-                              second_name: "second_name",
-                              thired_name: "thired_name",
-                              forth_name: "forth_name",
-                              national_number: 456456456456456,
-                              phone: 456456456456,
-                              email: "email@mail.com",
-                              username: "username",
-                              password: "password",
-                              state: "state",
-                              city: "city",
-                            ));
-                        Navigator.of(context).pushNamed("homepage");
-                      },
-                      child: const Text(
-                        "Create Account",
-                        style: TextStyle(fontSize: 15),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: _thirdName,
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Third Name",
+                              ),
+                              validator: (value) => value?.isEmpty ?? true ? "Enter third name please" : null,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: TextFormField(
+                              controller: _forthName,
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Fourth Name",
+                              ),
+                              validator: (value) => value?.isEmpty ?? true ? "Enter forth name please" : null,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    // ),
-                  ],
+
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        controller: _phoneNumber,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.phone),
+                          hintText: "Enter Phone Number",
+                        ),
+                        validator: (value) => value?.isEmpty ?? true ? "Enter mobile number please" : null,
+                      ),
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        controller: _nationalId,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.credit_card_outlined),
+                          hintText: "Enter National ID",
+                        ),
+                        validator: (value) => value?.isEmpty ?? true ? "Enter national ID Number please" : null,
+                      ),
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        controller: _email,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.email),
+                          hintText: "Enter Email",
+                        ),
+                        validator: (value) {
+                          if (value?.isEmpty ?? true) return "Enter email please";
+                          if (!value.toString().contains("@")) return "enter valid email please";
+
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        controller: _username,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.verified_user),
+                          hintText: "Enter Username",
+                        ),
+                        validator: (value) => value?.isEmpty ?? true ? "Enter username please" : null,
+                      ),
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        controller: _password,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.password),
+                          hintText: "Enter Password",
+                        ),
+                        validator: (value) => (value?.isEmpty ?? true) ? "Enter password please" : null,
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                          controller: _rePassword,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(Icons.password),
+                            hintText: "Repeat Password",
+                          ),
+                          validator: (value) {
+                            if (value?.isEmpty ?? true) return "Enter password confirmation please";
+
+                            if (value.toString().trim() != _password.text.trim()) return "passwords should match";
+                            return null;
+                          }),
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        controller: _state,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.landscape),
+                          hintText: "Enter State",
+                        ),
+                        validator: (value) => (value?.isEmpty ?? true) ? "Enter state please" : null,
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        controller: _city,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.place),
+                          hintText: "Enter City",
+                        ),
+                        validator: (value) => (value?.isEmpty ?? true) ? "Enter city please" : null,
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            const Text("if you have account "),
+                            InkWell(
+                              onTap: () => Navigator.of(context).pushNamed("login"),
+                              child: const Text("Click Here"),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      ElevatedButton(
+                        onPressed: () async {
+                          if (formKey.currentState?.validate() ?? false) {
+                            final result = await ref
+                                .read(
+                                  authControllerProvider.notifier,
+                                )
+                                .register(
+                                  User(
+                                    first_name: _firstName.text.trim(),
+                                    second_name: _secondName.text.trim(),
+                                    thired_name: _thirdName.text.trim(),
+                                    forth_name: _forthName.text.trim(),
+                                    national_number: _nationalId.text.trim(),
+                                    phone: _phoneNumber.text.trim(),
+                                    email: _email.text.trim(),
+                                    username: _username.text.trim(),
+                                    password: _password.text.trim(),
+                                    state: _state.text.trim(),
+                                    city: _city.text.trim(),
+                                  ),
+                                );
+
+                            if (result && context.mounted) Navigator.of(context).pushNamed("homepage");
+                          }
+                        },
+                        child: const Text("Create Account", style: TextStyle(fontSize: 15)),
+                      ),
+                      // ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ],
-    ));
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

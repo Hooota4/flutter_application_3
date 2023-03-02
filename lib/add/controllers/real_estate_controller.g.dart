@@ -7,12 +7,12 @@ part of 'real_estate_controller.dart';
 // **************************************************************************
 
 String _$realEstateControllerHash() =>
-    r'bc18a6d0e2a037aa8f10ee8a9a0359fab0d9d984';
+    r'f1cfc29db669726ff95db676f9f9f753164cd6f9';
 
 /// See also [RealEstateController].
 @ProviderFor(RealEstateController)
 final realEstateControllerProvider =
-    AutoDisposeNotifierProvider<RealEstateController, Auth>.internal(
+    AutoDisposeNotifierProvider<RealEstateController, void>.internal(
   RealEstateController.new,
   name: r'realEstateControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,5 +22,5 @@ final realEstateControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$RealEstateController = AutoDisposeNotifier<Auth>;
+typedef _$RealEstateController = AutoDisposeNotifier<void>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

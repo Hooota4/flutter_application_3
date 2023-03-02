@@ -26,8 +26,8 @@ mixin _$User {
   String get second_name => throw _privateConstructorUsedError;
   String get thired_name => throw _privateConstructorUsedError;
   String get forth_name => throw _privateConstructorUsedError;
-  int get national_number => throw _privateConstructorUsedError;
-  int get phone => throw _privateConstructorUsedError;
+  String get national_number => throw _privateConstructorUsedError;
+  String get phone => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
@@ -51,8 +51,8 @@ abstract class $UserCopyWith<$Res> {
       String second_name,
       String thired_name,
       String forth_name,
-      int national_number,
-      int phone,
+      String national_number,
+      String phone,
       String email,
       String username,
       String password,
@@ -115,11 +115,11 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       national_number: null == national_number
           ? _value.national_number
           : national_number // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -157,8 +157,8 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String second_name,
       String thired_name,
       String forth_name,
-      int national_number,
-      int phone,
+      String national_number,
+      String phone,
       String email,
       String username,
       String password,
@@ -217,11 +217,11 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
       national_number: null == national_number
           ? _value.national_number
           : national_number // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -279,9 +279,9 @@ class _$_User implements _User {
   @override
   final String forth_name;
   @override
-  final int national_number;
+  final String national_number;
   @override
-  final int phone;
+  final String phone;
   @override
   final String email;
   @override
@@ -365,8 +365,8 @@ abstract class _User implements User {
       required final String second_name,
       required final String thired_name,
       required final String forth_name,
-      required final int national_number,
-      required final int phone,
+      required final String national_number,
+      required final String phone,
       required final String email,
       required final String username,
       required final String password,
@@ -388,9 +388,9 @@ abstract class _User implements User {
   @override
   String get forth_name;
   @override
-  int get national_number;
+  String get national_number;
   @override
-  int get phone;
+  String get phone;
   @override
   String get email;
   @override

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_application_3/auth/models/auth_model.dart';
@@ -25,33 +26,36 @@ class AuthController extends _$AuthController {
         data: FormData.fromMap({'username': username, 'password': password}),
       );
 
-      final data = ResponseModel.fromJson(res.data).data;
-
-      final infoUser = User.fromJson(data['info_user'] as Map<String, dynamic>);
-      state = Auth(token: data['token'], isLoggedIn: true, user: infoUser);
+      final data = ResponseModel.fromJson(res.data);
+      final infoUser = User.fromJson(data.data!['info_user'] as Map<String, dynamic>);
+      state = Auth(token: data.data!['token'], isLoggedIn: true, user: infoUser);
 
       pref.setString('auth', jsonEncode(state));
 
-      return true;
+      return data.success;
     } catch (e) {
       return false;
     }
   }
 
-  void register(User user) async {
+  Future<bool> register(User user) async {
     try {
-      final res = await dio.post(
-        '/register',
-        data: FormData.fromMap(user.toJson()),
-      );
+      final res = await dio.post('/register', data: FormData.fromMap(user.toJson()));
+      print(res);
 
-      final data = ResponseModel.fromJson(res.data).data;
-      final infoUser = User.fromJson(data['info_user'] as Map<String, dynamic>);
+      final data = ResponseModel.fromJson(res.data);
 
-      state = Auth(token: data['token'], isLoggedIn: true, user: infoUser);
+      final infoUser = User.fromJson(data.data!['info_user'] as Map<String, dynamic>);
+
+      state = Auth(token: data.data!['token'], isLoggedIn: true, user: infoUser);
+
       pref.setString('auth', jsonEncode(state));
-    } catch (e) {
-      return;
+
+      return data.success;
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+      return Future.value(false);
     }
   }
 

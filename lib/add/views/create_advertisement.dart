@@ -52,7 +52,9 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
     _phone.dispose();
     _description.dispose();
     _facilityNumber.dispose();
-    _realEstateController.dispose();
+    try {
+      _realEstateController.dispose();
+    } catch (e) {}
     super.dispose();
   }
 
@@ -170,12 +172,12 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                     ),
                     const SizedBox(height: 16),
                     Consumer(builder: (context, ref, child) {
-                      final user = ref.watch(authControllerProvider).user;
+                      final auth = ref.watch(authControllerProvider);
 
                       return ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           final estate = RealEstateModel(
-                            addvertiser: user!.id!,
+                            addvertiser: auth.user!.id!,
                             estate_name: _title.text.trim(),
                             estate_type: selectedEstateType ?? "",
                             number_of_facilities: _facilityNumber.text.trim(),
@@ -187,20 +189,20 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                             owner_national_number: "", //canceled
                             location: location.toString(),
                             optional_details: _description.text.trim(),
-                            // estate_image1: "",
-                            // estate_image2: "",
-                            // estate_image3: "",
-                            // authentication_image: "",
                             map_location: location.toString(), //same as location
                           );
 
                           final images = [...?estateImages, ...?authenticationImage];
                           setState(() {});
-                          print(images);
-                          print(estate);
-
-                          ref.read(realEstateControllerProvider.notifier).addRealEstate(realEstate: estate, images: images);
-                          // Navigator.of(context).pushReplacementNamed("homepage")
+                          final result = await ref
+                              .read(
+                                realEstateControllerProvider.notifier,
+                              )
+                              .addRealEstate(
+                                realEstate: estate,
+                                images: images,
+                              );
+                          if (result && context.mounted) Navigator.of(context).pushReplacementNamed("homepage");
                         },
                         child: const Text("Add Advertisement", style: TextStyle(fontSize: 16)),
                       );

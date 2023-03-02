@@ -6,7 +6,8 @@ part 'response_model.g.dart';
 @freezed
 class ResponseModel with _$ResponseModel {
   const factory ResponseModel({
-    required Map<String, dynamic> data,
+    required Map<String, dynamic>? data,
+    required bool success,
     required String? message,
   }) = _ResponseModel;
 
