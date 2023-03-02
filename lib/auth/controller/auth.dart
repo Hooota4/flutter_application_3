@@ -1,9 +1,11 @@
-import 'dart:io';
+import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_application_3/auth/models/auth_model.dart';
 import 'package:flutter_application_3/auth/models/response_model.dart';
 import 'package:flutter_application_3/auth/models/user_model.dart';
+import 'package:flutter_application_3/common/http_client.dart';
+import 'package:flutter_application_3/main.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth.g.dart';
@@ -11,9 +13,12 @@ part 'auth.g.dart';
 @riverpod
 class AuthController extends _$AuthController {
   @override
-  Auth build() => const Auth(token: null, isLoggedIn: false, user: null);
+  Auth build() {
+    final cachedAuth = pref.getString('auth');
+    return cachedAuth != null ? Auth.fromJson(jsonDecode(cachedAuth)) : const Auth(token: null, isLoggedIn: false, user: null);
+  }
 
-  void login({required String username, required String password}) async {
+  Future<bool> login({required String username, required String password}) async {
     try {
       final res = await dio.post(
         '/login',
@@ -21,11 +26,15 @@ class AuthController extends _$AuthController {
       );
 
       final data = ResponseModel.fromJson(res.data).data;
-      if (data != null) {
-        state = Auth(token: data['token'], isLoggedIn: true, user: null);
-      }
+
+      final infoUser = User.fromJson(data['info_user'] as Map<String, dynamic>);
+      state = Auth(token: data['token'], isLoggedIn: true, user: infoUser);
+
+      pref.setString('auth', jsonEncode(state));
+
+      return true;
     } catch (e) {
-      return;
+      return false;
     }
   }
 
@@ -37,20 +46,19 @@ class AuthController extends _$AuthController {
       );
 
       final data = ResponseModel.fromJson(res.data).data;
-      if (data != null) {
-        state = Auth(token: data['token'], isLoggedIn: true, user: null);
-      }
+      final infoUser = User.fromJson(data['info_user'] as Map<String, dynamic>);
+
+      state = Auth(token: data['token'], isLoggedIn: true, user: infoUser);
+      pref.setString('auth', jsonEncode(state));
     } catch (e) {
       return;
     }
   }
 
-  void logout() {}
+  void logout() {
+    if (state.isLoggedIn ?? false) {
+      pref.remove('auth');
+      state = const Auth(token: null, isLoggedIn: false, user: null);
+    }
+  }
 }
-
-final dio = Dio(BaseOptions(
-  baseUrl: "http://192.168.1.104:8000/requests/",
-  connectTimeout: const Duration(seconds: 5),
-  receiveTimeout: const Duration(seconds: 5),
-  headers: {HttpHeaders.userAgentHeader: 'dio', 'common-header': 'xx'},
-));

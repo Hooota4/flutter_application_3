@@ -14,12 +14,17 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+Auth _$AuthFromJson(Map<String, dynamic> json) {
+  return _Auth.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Auth {
   String? get token => throw _privateConstructorUsedError;
   bool? get isLoggedIn => throw _privateConstructorUsedError;
   User? get user => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $AuthCopyWith<Auth> get copyWith => throw _privateConstructorUsedError;
 }
@@ -123,10 +128,12 @@ class __$$_AuthCopyWithImpl<$Res> extends _$AuthCopyWithImpl<$Res, _$_Auth>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_Auth implements _Auth {
   const _$_Auth(
       {required this.token, required this.isLoggedIn, required this.user});
+
+  factory _$_Auth.fromJson(Map<String, dynamic> json) => _$$_AuthFromJson(json);
 
   @override
   final String? token;
@@ -151,6 +158,7 @@ class _$_Auth implements _Auth {
             (identical(other.user, user) || other.user == user));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, token, isLoggedIn, user);
 
@@ -159,6 +167,13 @@ class _$_Auth implements _Auth {
   @pragma('vm:prefer-inline')
   _$$_AuthCopyWith<_$_Auth> get copyWith =>
       __$$_AuthCopyWithImpl<_$_Auth>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_AuthToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Auth implements Auth {
@@ -166,6 +181,8 @@ abstract class _Auth implements Auth {
       {required final String? token,
       required final bool? isLoggedIn,
       required final User? user}) = _$_Auth;
+
+  factory _Auth.fromJson(Map<String, dynamic> json) = _$_Auth.fromJson;
 
   @override
   String? get token;

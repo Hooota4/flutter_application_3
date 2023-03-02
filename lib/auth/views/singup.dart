@@ -91,6 +91,16 @@ class SingUpState extends ConsumerState<SingUp> {
                       obscureText: true,
                       decoration: const InputDecoration(prefixIcon: Icon(Icons.password), hintText: "Repeat Password"),
                     ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      obscureText: true,
+                      decoration: const InputDecoration(prefixIcon: Icon(Icons.password), hintText: "Enter State"),
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      obscureText: true,
+                      decoration: const InputDecoration(prefixIcon: Icon(Icons.password), hintText: "Enter City"),
+                    ),
 
                     Container(
                       margin: const EdgeInsets.all(10),
@@ -123,8 +133,8 @@ class SingUpState extends ConsumerState<SingUp> {
                               second_name: "second_name",
                               thired_name: "thired_name",
                               forth_name: "forth_name",
-                              national_number: "456456456456456",
-                              phone: "456456456456",
+                              national_number: 456456456456456,
+                              phone: 456456456456,
                               email: "email@mail.com",
                               username: "username",
                               password: "password",

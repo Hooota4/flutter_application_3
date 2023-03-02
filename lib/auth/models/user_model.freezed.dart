@@ -20,12 +20,14 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$User {
+  int? get id => throw _privateConstructorUsedError;
+  int? get user => throw _privateConstructorUsedError;
   String get first_name => throw _privateConstructorUsedError;
   String get second_name => throw _privateConstructorUsedError;
   String get thired_name => throw _privateConstructorUsedError;
   String get forth_name => throw _privateConstructorUsedError;
-  String get national_number => throw _privateConstructorUsedError;
-  String get phone => throw _privateConstructorUsedError;
+  int get national_number => throw _privateConstructorUsedError;
+  int get phone => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
@@ -43,12 +45,14 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res, User>;
   @useResult
   $Res call(
-      {String first_name,
+      {int? id,
+      int? user,
+      String first_name,
       String second_name,
       String thired_name,
       String forth_name,
-      String national_number,
-      String phone,
+      int national_number,
+      int phone,
       String email,
       String username,
       String password,
@@ -69,6 +73,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
+    Object? user = freezed,
     Object? first_name = null,
     Object? second_name = null,
     Object? thired_name = null,
@@ -82,6 +88,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? city = null,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as int?,
       first_name: null == first_name
           ? _value.first_name
           : first_name // ignore: cast_nullable_to_non_nullable
@@ -101,11 +115,11 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       national_number: null == national_number
           ? _value.national_number
           : national_number // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -137,12 +151,14 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String first_name,
+      {int? id,
+      int? user,
+      String first_name,
       String second_name,
       String thired_name,
       String forth_name,
-      String national_number,
-      String phone,
+      int national_number,
+      int phone,
       String email,
       String username,
       String password,
@@ -159,6 +175,8 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
+    Object? user = freezed,
     Object? first_name = null,
     Object? second_name = null,
     Object? thired_name = null,
@@ -172,6 +190,14 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? city = null,
   }) {
     return _then(_$_User(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as int?,
       first_name: null == first_name
           ? _value.first_name
           : first_name // ignore: cast_nullable_to_non_nullable
@@ -191,11 +217,11 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
       national_number: null == national_number
           ? _value.national_number
           : national_number // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -224,7 +250,9 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
 @JsonSerializable()
 class _$_User implements _User {
   const _$_User(
-      {required this.first_name,
+      {this.id,
+      this.user,
+      required this.first_name,
       required this.second_name,
       required this.thired_name,
       required this.forth_name,
@@ -239,6 +267,10 @@ class _$_User implements _User {
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
   @override
+  final int? id;
+  @override
+  final int? user;
+  @override
   final String first_name;
   @override
   final String second_name;
@@ -247,9 +279,9 @@ class _$_User implements _User {
   @override
   final String forth_name;
   @override
-  final String national_number;
+  final int national_number;
   @override
-  final String phone;
+  final int phone;
   @override
   final String email;
   @override
@@ -263,7 +295,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(first_name: $first_name, second_name: $second_name, thired_name: $thired_name, forth_name: $forth_name, national_number: $national_number, phone: $phone, email: $email, username: $username, password: $password, state: $state, city: $city)';
+    return 'User(id: $id, user: $user, first_name: $first_name, second_name: $second_name, thired_name: $thired_name, forth_name: $forth_name, national_number: $national_number, phone: $phone, email: $email, username: $username, password: $password, state: $state, city: $city)';
   }
 
   @override
@@ -271,6 +303,8 @@ class _$_User implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_User &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.user, user) || other.user == user) &&
             (identical(other.first_name, first_name) ||
                 other.first_name == first_name) &&
             (identical(other.second_name, second_name) ||
@@ -295,6 +329,8 @@ class _$_User implements _User {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      id,
+      user,
       first_name,
       second_name,
       thired_name,
@@ -323,12 +359,14 @@ class _$_User implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required final String first_name,
+      {final int? id,
+      final int? user,
+      required final String first_name,
       required final String second_name,
       required final String thired_name,
       required final String forth_name,
-      required final String national_number,
-      required final String phone,
+      required final int national_number,
+      required final int phone,
       required final String email,
       required final String username,
       required final String password,
@@ -338,6 +376,10 @@ abstract class _User implements User {
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
+  int? get id;
+  @override
+  int? get user;
+  @override
   String get first_name;
   @override
   String get second_name;
@@ -346,9 +388,9 @@ abstract class _User implements User {
   @override
   String get forth_name;
   @override
-  String get national_number;
+  int get national_number;
   @override
-  String get phone;
+  int get phone;
   @override
   String get email;
   @override

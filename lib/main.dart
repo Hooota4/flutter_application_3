@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:flutter_application_3/Admin/LoginAdmin.dart';
-import 'package:flutter_application_3/add/CreateAdver.dart';
-import 'package:flutter_application_3/home/homepage.dart';
+import 'package:flutter_application_3/add/views/create_advertisement.dart';
+import 'package:flutter_application_3/home/views/homepage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth/views/login.dart';
 import 'auth/views/singup.dart';
 import 'splash/splash_screen.dart';
 
-void main() {
+late SharedPreferences pref;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  pref = await SharedPreferences.getInstance();
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -20,13 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: const SplashScreen(),
-      theme: ThemeData(
-        //   fontFamily: GoogleFonts.lexend().fontFamily,
-        //   colorScheme: ColorScheme.light().copyWith(
-        //       // primary: Colors.grey,
-        //       ),
-        useMaterial3: true,
-      ),
+      theme: ThemeData(useMaterial3: true),
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData.dark(
         useMaterial3: true,
@@ -34,14 +34,20 @@ class MyApp extends StatelessWidget {
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(borderSide: BorderSide(width: 1)),
         ),
+        dropdownMenuTheme: DropdownMenuThemeData(
+          menuStyle: MenuStyle(
+            backgroundColor: MaterialStateColor.resolveWith((states) => Colors.grey.shade900),
+          ),
+        ),
       ),
       debugShowCheckedModeBanner: false,
+      initialRoute: "splash",
       routes: {
         "splash": (context) => const SplashScreen(),
         "login": (context) => const Login(),
         "singup": (context) => const SingUp(),
         "homepage": (context) => const HomePage(),
-        "createadver": (context) => const CreateAdver(),
+        "createadver": (context) => const CreateAdvertisement(),
       },
     );
   }
