@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/auth/controller/auth.dart';
+import 'package:flutter_application_3/auth/models/user_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Login extends ConsumerStatefulWidget {
@@ -69,10 +70,10 @@ class _LoginState extends ConsumerState<Login> {
                           return ElevatedButton(
                             onPressed: () => ref
                                 .read(authControllerProvider.notifier)
-                                .login(
-                                  username: _phone.text.trim(),
-                                  password: _password.text.trim(),
-                                )
+                                .login(UserCredentials(
+                                  username: _phone.text.toString(),
+                                  password: _password.text.toString(),
+                                ))
                                 .then((value) {
                               if (value) Navigator.of(context).pushReplacementNamed("homepage");
                             }),

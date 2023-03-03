@@ -239,17 +239,21 @@ class SingUpState extends ConsumerState<SingUp> {
                                 )
                                 .register(
                                   User(
-                                    first_name: _firstName.text.trim(),
-                                    second_name: _secondName.text.trim(),
-                                    thired_name: _thirdName.text.trim(),
-                                    forth_name: _forthName.text.trim(),
-                                    national_number: _nationalId.text.trim(),
+                                    firstName: _firstName.text.trim(),
+                                    secondName: _secondName.text.trim(),
+                                    thirdName: _thirdName.text.trim(),
+                                    forthName: _forthName.text.trim(),
+                                    nationalID: _nationalId.text.trim(),
                                     phone: _phoneNumber.text.trim(),
                                     email: _email.text.trim(),
-                                    username: _username.text.trim(),
-                                    password: _password.text.trim(),
                                     state: _state.text.trim(),
                                     city: _city.text.trim(),
+                                    id: 0,
+                                    user: 0,
+                                  ),
+                                  UserCredentials(
+                                    username: _username.text.trim(),
+                                    password: _password.text.trim(),
                                   ),
                                 );
 

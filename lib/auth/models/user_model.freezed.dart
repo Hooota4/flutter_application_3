@@ -22,15 +22,13 @@ User _$UserFromJson(Map<String, dynamic> json) {
 mixin _$User {
   int? get id => throw _privateConstructorUsedError;
   int? get user => throw _privateConstructorUsedError;
-  String get first_name => throw _privateConstructorUsedError;
-  String get second_name => throw _privateConstructorUsedError;
-  String get thired_name => throw _privateConstructorUsedError;
-  String get forth_name => throw _privateConstructorUsedError;
-  String get national_number => throw _privateConstructorUsedError;
+  String get firstName => throw _privateConstructorUsedError;
+  String get secondName => throw _privateConstructorUsedError;
+  String get thirdName => throw _privateConstructorUsedError;
+  String get forthName => throw _privateConstructorUsedError;
+  String get nationalID => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
-  String get username => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
   String get state => throw _privateConstructorUsedError;
   String get city => throw _privateConstructorUsedError;
 
@@ -47,15 +45,13 @@ abstract class $UserCopyWith<$Res> {
   $Res call(
       {int? id,
       int? user,
-      String first_name,
-      String second_name,
-      String thired_name,
-      String forth_name,
-      String national_number,
+      String firstName,
+      String secondName,
+      String thirdName,
+      String forthName,
+      String nationalID,
       String phone,
       String email,
-      String username,
-      String password,
       String state,
       String city});
 }
@@ -75,15 +71,13 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   $Res call({
     Object? id = freezed,
     Object? user = freezed,
-    Object? first_name = null,
-    Object? second_name = null,
-    Object? thired_name = null,
-    Object? forth_name = null,
-    Object? national_number = null,
+    Object? firstName = null,
+    Object? secondName = null,
+    Object? thirdName = null,
+    Object? forthName = null,
+    Object? nationalID = null,
     Object? phone = null,
     Object? email = null,
-    Object? username = null,
-    Object? password = null,
     Object? state = null,
     Object? city = null,
   }) {
@@ -96,25 +90,25 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as int?,
-      first_name: null == first_name
-          ? _value.first_name
-          : first_name // ignore: cast_nullable_to_non_nullable
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      second_name: null == second_name
-          ? _value.second_name
-          : second_name // ignore: cast_nullable_to_non_nullable
+      secondName: null == secondName
+          ? _value.secondName
+          : secondName // ignore: cast_nullable_to_non_nullable
               as String,
-      thired_name: null == thired_name
-          ? _value.thired_name
-          : thired_name // ignore: cast_nullable_to_non_nullable
+      thirdName: null == thirdName
+          ? _value.thirdName
+          : thirdName // ignore: cast_nullable_to_non_nullable
               as String,
-      forth_name: null == forth_name
-          ? _value.forth_name
-          : forth_name // ignore: cast_nullable_to_non_nullable
+      forthName: null == forthName
+          ? _value.forthName
+          : forthName // ignore: cast_nullable_to_non_nullable
               as String,
-      national_number: null == national_number
-          ? _value.national_number
-          : national_number // ignore: cast_nullable_to_non_nullable
+      nationalID: null == nationalID
+          ? _value.nationalID
+          : nationalID // ignore: cast_nullable_to_non_nullable
               as String,
       phone: null == phone
           ? _value.phone
@@ -123,14 +117,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
               as String,
       state: null == state
           ? _value.state
@@ -153,15 +139,13 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   $Res call(
       {int? id,
       int? user,
-      String first_name,
-      String second_name,
-      String thired_name,
-      String forth_name,
-      String national_number,
+      String firstName,
+      String secondName,
+      String thirdName,
+      String forthName,
+      String nationalID,
       String phone,
       String email,
-      String username,
-      String password,
       String state,
       String city});
 }
@@ -177,15 +161,13 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
   $Res call({
     Object? id = freezed,
     Object? user = freezed,
-    Object? first_name = null,
-    Object? second_name = null,
-    Object? thired_name = null,
-    Object? forth_name = null,
-    Object? national_number = null,
+    Object? firstName = null,
+    Object? secondName = null,
+    Object? thirdName = null,
+    Object? forthName = null,
+    Object? nationalID = null,
     Object? phone = null,
     Object? email = null,
-    Object? username = null,
-    Object? password = null,
     Object? state = null,
     Object? city = null,
   }) {
@@ -198,25 +180,25 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as int?,
-      first_name: null == first_name
-          ? _value.first_name
-          : first_name // ignore: cast_nullable_to_non_nullable
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      second_name: null == second_name
-          ? _value.second_name
-          : second_name // ignore: cast_nullable_to_non_nullable
+      secondName: null == secondName
+          ? _value.secondName
+          : secondName // ignore: cast_nullable_to_non_nullable
               as String,
-      thired_name: null == thired_name
-          ? _value.thired_name
-          : thired_name // ignore: cast_nullable_to_non_nullable
+      thirdName: null == thirdName
+          ? _value.thirdName
+          : thirdName // ignore: cast_nullable_to_non_nullable
               as String,
-      forth_name: null == forth_name
-          ? _value.forth_name
-          : forth_name // ignore: cast_nullable_to_non_nullable
+      forthName: null == forthName
+          ? _value.forthName
+          : forthName // ignore: cast_nullable_to_non_nullable
               as String,
-      national_number: null == national_number
-          ? _value.national_number
-          : national_number // ignore: cast_nullable_to_non_nullable
+      nationalID: null == nationalID
+          ? _value.nationalID
+          : nationalID // ignore: cast_nullable_to_non_nullable
               as String,
       phone: null == phone
           ? _value.phone
@@ -225,14 +207,6 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
               as String,
       state: null == state
           ? _value.state
@@ -252,15 +226,13 @@ class _$_User implements _User {
   const _$_User(
       {this.id,
       this.user,
-      required this.first_name,
-      required this.second_name,
-      required this.thired_name,
-      required this.forth_name,
-      required this.national_number,
+      required this.firstName,
+      required this.secondName,
+      required this.thirdName,
+      required this.forthName,
+      required this.nationalID,
       required this.phone,
       required this.email,
-      required this.username,
-      required this.password,
       required this.state,
       required this.city});
 
@@ -271,23 +243,19 @@ class _$_User implements _User {
   @override
   final int? user;
   @override
-  final String first_name;
+  final String firstName;
   @override
-  final String second_name;
+  final String secondName;
   @override
-  final String thired_name;
+  final String thirdName;
   @override
-  final String forth_name;
+  final String forthName;
   @override
-  final String national_number;
+  final String nationalID;
   @override
   final String phone;
   @override
   final String email;
-  @override
-  final String username;
-  @override
-  final String password;
   @override
   final String state;
   @override
@@ -295,7 +263,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, user: $user, first_name: $first_name, second_name: $second_name, thired_name: $thired_name, forth_name: $forth_name, national_number: $national_number, phone: $phone, email: $email, username: $username, password: $password, state: $state, city: $city)';
+    return 'User(id: $id, user: $user, firstName: $firstName, secondName: $secondName, thirdName: $thirdName, forthName: $forthName, nationalID: $nationalID, phone: $phone, email: $email, state: $state, city: $city)';
   }
 
   @override
@@ -305,43 +273,26 @@ class _$_User implements _User {
             other is _$_User &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.first_name, first_name) ||
-                other.first_name == first_name) &&
-            (identical(other.second_name, second_name) ||
-                other.second_name == second_name) &&
-            (identical(other.thired_name, thired_name) ||
-                other.thired_name == thired_name) &&
-            (identical(other.forth_name, forth_name) ||
-                other.forth_name == forth_name) &&
-            (identical(other.national_number, national_number) ||
-                other.national_number == national_number) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.secondName, secondName) ||
+                other.secondName == secondName) &&
+            (identical(other.thirdName, thirdName) ||
+                other.thirdName == thirdName) &&
+            (identical(other.forthName, forthName) ||
+                other.forthName == forthName) &&
+            (identical(other.nationalID, nationalID) ||
+                other.nationalID == nationalID) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
             (identical(other.state, state) || other.state == state) &&
             (identical(other.city, city) || other.city == city));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      user,
-      first_name,
-      second_name,
-      thired_name,
-      forth_name,
-      national_number,
-      phone,
-      email,
-      username,
-      password,
-      state,
-      city);
+  int get hashCode => Object.hash(runtimeType, id, user, firstName, secondName,
+      thirdName, forthName, nationalID, phone, email, state, city);
 
   @JsonKey(ignore: true)
   @override
@@ -361,15 +312,13 @@ abstract class _User implements User {
   const factory _User(
       {final int? id,
       final int? user,
-      required final String first_name,
-      required final String second_name,
-      required final String thired_name,
-      required final String forth_name,
-      required final String national_number,
+      required final String firstName,
+      required final String secondName,
+      required final String thirdName,
+      required final String forthName,
+      required final String nationalID,
       required final String phone,
       required final String email,
-      required final String username,
-      required final String password,
       required final String state,
       required final String city}) = _$_User;
 
@@ -380,23 +329,19 @@ abstract class _User implements User {
   @override
   int? get user;
   @override
-  String get first_name;
+  String get firstName;
   @override
-  String get second_name;
+  String get secondName;
   @override
-  String get thired_name;
+  String get thirdName;
   @override
-  String get forth_name;
+  String get forthName;
   @override
-  String get national_number;
+  String get nationalID;
   @override
   String get phone;
   @override
   String get email;
-  @override
-  String get username;
-  @override
-  String get password;
   @override
   String get state;
   @override
@@ -404,4 +349,160 @@ abstract class _User implements User {
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;
+}
+
+UserCredentials _$UserCredentialsFromJson(Map<String, dynamic> json) {
+  return _UserCredentials.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UserCredentials {
+  String get username => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UserCredentialsCopyWith<UserCredentials> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserCredentialsCopyWith<$Res> {
+  factory $UserCredentialsCopyWith(
+          UserCredentials value, $Res Function(UserCredentials) then) =
+      _$UserCredentialsCopyWithImpl<$Res, UserCredentials>;
+  @useResult
+  $Res call({String username, String password});
+}
+
+/// @nodoc
+class _$UserCredentialsCopyWithImpl<$Res, $Val extends UserCredentials>
+    implements $UserCredentialsCopyWith<$Res> {
+  _$UserCredentialsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? username = null,
+    Object? password = null,
+  }) {
+    return _then(_value.copyWith(
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_UserCredentialsCopyWith<$Res>
+    implements $UserCredentialsCopyWith<$Res> {
+  factory _$$_UserCredentialsCopyWith(
+          _$_UserCredentials value, $Res Function(_$_UserCredentials) then) =
+      __$$_UserCredentialsCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String username, String password});
+}
+
+/// @nodoc
+class __$$_UserCredentialsCopyWithImpl<$Res>
+    extends _$UserCredentialsCopyWithImpl<$Res, _$_UserCredentials>
+    implements _$$_UserCredentialsCopyWith<$Res> {
+  __$$_UserCredentialsCopyWithImpl(
+      _$_UserCredentials _value, $Res Function(_$_UserCredentials) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? username = null,
+    Object? password = null,
+  }) {
+    return _then(_$_UserCredentials(
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_UserCredentials implements _UserCredentials {
+  const _$_UserCredentials({required this.username, required this.password});
+
+  factory _$_UserCredentials.fromJson(Map<String, dynamic> json) =>
+      _$$_UserCredentialsFromJson(json);
+
+  @override
+  final String username;
+  @override
+  final String password;
+
+  @override
+  String toString() {
+    return 'UserCredentials(username: $username, password: $password)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_UserCredentials &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.password, password) ||
+                other.password == password));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, username, password);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_UserCredentialsCopyWith<_$_UserCredentials> get copyWith =>
+      __$$_UserCredentialsCopyWithImpl<_$_UserCredentials>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_UserCredentialsToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UserCredentials implements UserCredentials {
+  const factory _UserCredentials(
+      {required final String username,
+      required final String password}) = _$_UserCredentials;
+
+  factory _UserCredentials.fromJson(Map<String, dynamic> json) =
+      _$_UserCredentials.fromJson;
+
+  @override
+  String get username;
+  @override
+  String get password;
+  @override
+  @JsonKey(ignore: true)
+  _$$_UserCredentialsCopyWith<_$_UserCredentials> get copyWith =>
+      throw _privateConstructorUsedError;
 }

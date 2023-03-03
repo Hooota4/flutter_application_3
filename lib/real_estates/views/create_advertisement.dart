@@ -1,10 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/add/controllers/real_estate_controller.dart';
-import 'package:flutter_application_3/add/models/real_estate_model.dart';
-import 'package:flutter_application_3/add/views/image_picker.dart';
-import 'package:flutter_application_3/add/views/location_picker.dart';
 import 'package:flutter_application_3/auth/controller/auth.dart';
 import 'package:flutter_application_3/constants.dart';
+import 'package:flutter_application_3/real_estates/controllers/real_estate_controller.dart';
+import 'package:flutter_application_3/real_estates/models/real_estate_model.dart';
+import 'package:flutter_application_3/real_estates/views/image_picker.dart';
+import 'package:flutter_application_3/real_estates/views/location_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,18 +19,18 @@ class CreateAdvertisement extends StatefulWidget {
 }
 
 class _CreateAdvertisementState extends State<CreateAdvertisement> {
-  String? selectedEstateType;
-  late List<XFile>? estateImages;
-  late List<XFile>? authenticationImage;
-  late LatLng? location;
-  late final TextEditingController _realEstateController;
+  String? type;
+  String? operation;
+  late LatLng location;
+  late List<XFile> images;
+  late List<XFile> ownerShipProof;
   late final TextEditingController _title;
   late final TextEditingController _state;
   late final TextEditingController _city;
-  late final TextEditingController _facilityNumber;
   late final TextEditingController _price;
   late final TextEditingController _phone;
   late final TextEditingController _description;
+  late final TextEditingController _facilityNum;
 
   @override
   void initState() {
@@ -38,8 +40,7 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
     _price = TextEditingController();
     _phone = TextEditingController();
     _description = TextEditingController();
-    _facilityNumber = TextEditingController();
-    _realEstateController = TextEditingController();
+    _facilityNum = TextEditingController();
     super.initState();
   }
 
@@ -51,10 +52,8 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
     _price.dispose();
     _phone.dispose();
     _description.dispose();
-    _facilityNumber.dispose();
-    try {
-      _realEstateController.dispose();
-    } catch (e) {}
+    _facilityNum.dispose();
+
     super.dispose();
   }
 
@@ -93,16 +92,35 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                     const SizedBox(height: 16),
                     DropdownMenu<String>(
                       width: MediaQuery.of(context).size.width - 32,
-                      controller: _realEstateController,
-                      enableFilter: true,
                       label: const Text('Real Estate Type'),
                       dropdownMenuEntries: estatesTypesEntries,
                       inputDecorationTheme: const InputDecorationTheme(filled: true),
-                      onSelected: (String? estateType) => setState(() => selectedEstateType = estateType),
+                      onSelected: (String? estateType) => setState(() => type = estateType),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: RadioListTile(
+                            title: const Text("For Sell"),
+                            value: "Sell",
+                            groupValue: operation,
+                            onChanged: (value) => setState(() => operation = value.toString()),
+                          ),
+                        ),
+                        Expanded(
+                            child: RadioListTile(
+                          title: const Text("For Rent"),
+                          value: "Rent",
+                          groupValue: operation,
+                          onChanged: (value) => setState(() => operation = value.toString()),
+                        ))
+                      ],
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
-                      controller: _facilityNumber,
+                      controller: _facilityNum,
                       decoration: const InputDecoration(hintText: "number of facility "),
                     ),
                     const SizedBox(height: 16),
@@ -144,10 +162,11 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                           children: [
                             IconButton(
                                 onPressed: () async {
-                                  estateImages = await showDialog(
-                                    context: context,
-                                    builder: (context) => const ImagesUploader(imageCount: 3),
-                                  );
+                                  images = await showDialog(
+                                        context: context,
+                                        builder: (context) => const ImagesUploader(title: "Real Estate Photos", imageCount: 3),
+                                      ) ??
+                                      [];
                                   setState(() {});
                                 },
                                 icon: const Icon(Icons.image, size: 64)),
@@ -158,10 +177,11 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                           children: [
                             IconButton(
                                 onPressed: () async {
-                                  authenticationImage = await showDialog(
-                                    context: context,
-                                    builder: (context) => const ImagesUploader(),
-                                  );
+                                  ownerShipProof = await showDialog(
+                                        context: context,
+                                        builder: (context) => const ImagesUploader(title: "Ownership Proof "),
+                                      ) ??
+                                      [];
                                   setState(() {});
                                 },
                                 icon: const Icon(Icons.image, size: 64)),
@@ -177,31 +197,21 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                       return ElevatedButton(
                         onPressed: () async {
                           final estate = RealEstateModel(
-                            addvertiser: auth.user!.id!,
-                            estate_name: _title.text.trim(),
-                            estate_type: selectedEstateType ?? "",
-                            number_of_facilities: _facilityNumber.text.trim(),
+                            advertiser: auth.user!.id!,
+                            title: _title.text.trim(),
+                            type: type ?? "",
+                            facilitiesNum: _facilityNum.text.trim(),
                             state: _state.text.trim(),
                             city: _city.text.trim(),
-                            estate_description: _description.text.trim(),
+                            description: _description.text.trim(),
                             price: _price.text.trim(),
-                            estate_status: "Waitting",
-                            owner_national_number: "", //canceled
-                            location: location.toString(),
-                            optional_details: _description.text.trim(),
-                            map_location: location.toString(), //same as location
+                            approval: "Waiting",
+                            nationalID: "", //canceled
+                            location: jsonEncode(location.toJson()), id: 0, operation: '',
                           );
 
-                          final images = [...?estateImages, ...?authenticationImage];
-                          setState(() {});
-                          final result = await ref
-                              .read(
-                                realEstateControllerProvider.notifier,
-                              )
-                              .addRealEstate(
-                                realEstate: estate,
-                                images: images,
-                              );
+                          final result = await ref.read(createOrUpdateRealEstateProvider(estate, images, ownerShipProof).future);
+                          print(result);
                           if (result && context.mounted) Navigator.of(context).pushReplacementNamed("homepage");
                         },
                         child: const Text("Add Advertisement", style: TextStyle(fontSize: 16)),

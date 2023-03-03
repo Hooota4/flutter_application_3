@@ -8,18 +8,26 @@ class User with _$User {
   const factory User({
     int? id,
     int? user,
-    required String first_name,
-    required String second_name,
-    required String thired_name,
-    required String forth_name,
-    required String national_number,
+    required String firstName,
+    required String secondName,
+    required String thirdName,
+    required String forthName,
+    required String nationalID,
     required String phone,
     required String email,
-    required String username,
-    required String password,
     required String state,
     required String city,
   }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
+}
+
+@freezed
+class UserCredentials with _$UserCredentials {
+  const factory UserCredentials({
+    required String username,
+    required String password,
+  }) = _UserCredentials;
+
+  factory UserCredentials.fromJson(Map<String, Object?> json) => _$UserCredentialsFromJson(json);
 }
