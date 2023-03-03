@@ -4,7 +4,8 @@ import 'package:image_picker/image_picker.dart';
 
 class ImagesUploader extends StatefulWidget {
   final int imageCount;
-  const ImagesUploader({super.key, this.imageCount = 1});
+  final String title;
+  const ImagesUploader({super.key, required this.title, this.imageCount = 1});
 
   @override
   State<ImagesUploader> createState() => _ImagesUploaderState();
@@ -28,18 +29,9 @@ class _ImagesUploaderState extends State<ImagesUploader> {
           SliverAppBar(
             floating: false,
             pinned: true,
-            actions: [
-              if (images.isNotEmpty)
-                TextButton(
-                  onPressed: () => Navigator.pop(context, images),
-                  child: const Text("Done"),
-                )
-            ],
+            actions: [if (images.isNotEmpty) TextButton(onPressed: () => Navigator.pop(context, images), child: const Text("Done"))],
             expandedHeight: 100.0,
-            flexibleSpace: const FlexibleSpaceBar(
-              centerTitle: true,
-              title: Text("Images", style: TextStyle(fontSize: 20.0)),
-            ),
+            flexibleSpace: FlexibleSpaceBar(centerTitle: true, title: Text(widget.title, style: const TextStyle(fontSize: 20.0))),
           ),
           SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),

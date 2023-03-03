@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_application_3/auth/models/auth_model.dart';
 import 'package:flutter_application_3/auth/models/response_model.dart';
 import 'package:flutter_application_3/auth/models/user_model.dart';
-import 'package:flutter_application_3/common/http_client.dart';
+import 'package:flutter_application_3/common/helpers/http_client.dart';
 import 'package:flutter_application_3/main.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -19,39 +19,50 @@ class AuthController extends _$AuthController {
     return cachedAuth != null ? Auth.fromJson(jsonDecode(cachedAuth)) : const Auth(token: null, isLoggedIn: false, user: null);
   }
 
-  Future<bool> login({required String username, required String password}) async {
+  Future<bool> login(UserCredentials userCredentials) async {
     try {
-      final res = await dio.post(
-        '/login',
-        data: FormData.fromMap({'username': username, 'password': password}),
-      );
+      final res = await dio.post('/login', data: FormData.fromMap(userCredentials.toJson()));
 
-      final data = ResponseModel.fromJson(res.data);
-      final infoUser = User.fromJson(data.data!['info_user'] as Map<String, dynamic>);
-      state = Auth(token: data.data!['token'], isLoggedIn: true, user: infoUser);
+      try {
+        final data = ResponseModel.fromJson(res.data);
 
-      pref.setString('auth', jsonEncode(state));
+        final infoUser = User.fromJson(data.data!['userInfo'] as Map<String, dynamic>);
+        state = Auth(token: data.data!['token'], isLoggedIn: true, user: infoUser);
 
-      return data.success;
+        pref.setString('auth', jsonEncode(state));
+
+        return data.success;
+      } catch (e, s) {
+        log(e.toString());
+        log(s.toString());
+        return false;
+      }
     } catch (e) {
       return false;
     }
   }
 
-  Future<bool> register(User user) async {
+  Future<bool> register(User user, UserCredentials userCredentials) async {
     try {
-      final res = await dio.post('/register', data: FormData.fromMap(user.toJson()));
-      print(res);
+      final registrationData = {...user.toJson(), ...userCredentials.toJson()};
 
-      final data = ResponseModel.fromJson(res.data);
+      final res = await dio.post('/register', data: FormData.fromMap(registrationData));
 
-      final infoUser = User.fromJson(data.data!['info_user'] as Map<String, dynamic>);
+      try {
+        final data = ResponseModel.fromJson(res.data);
 
-      state = Auth(token: data.data!['token'], isLoggedIn: true, user: infoUser);
+        final infoUser = User.fromJson(data.data!['info_user'] as Map<String, dynamic>);
 
-      pref.setString('auth', jsonEncode(state));
+        state = Auth(token: data.data!['token'], isLoggedIn: true, user: infoUser);
 
-      return data.success;
+        pref.setString('auth', jsonEncode(state));
+
+        return data.success;
+      } catch (e, s) {
+        log(e.toString());
+        log(s.toString());
+        return false;
+      }
     } catch (e, s) {
       log(e.toString());
       log(s.toString());
