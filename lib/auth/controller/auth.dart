@@ -70,10 +70,11 @@ class AuthController extends _$AuthController {
     }
   }
 
-  void logout() {
+  bool logout() {
     if (state.isLoggedIn ?? false) {
       pref.remove('auth');
       state = const Auth(token: null, isLoggedIn: false, user: null);
     }
+    return true;
   }
 }

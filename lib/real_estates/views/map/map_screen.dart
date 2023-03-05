@@ -72,7 +72,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             zoom: 11,
           ),
           markers: {
-            ...realEstates.map((e) {
+            ...?realEstates?.map((e) {
               return Marker(
                 markerId: MarkerId(e.id.toString()),
                 icon: home,

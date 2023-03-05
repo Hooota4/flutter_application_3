@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/auth/controller/auth.dart';
 import 'package:flutter_application_3/auth/views/profile_screen.dart';
-import 'package:flutter_application_3/constants.dart';
-import 'package:flutter_application_3/home/views/map_screen.dart';
-import 'package:flutter_application_3/real_estates/views/map/my_real_estate_screen.dart';
+import 'package:flutter_application_3/common/constants.dart';
+import 'package:flutter_application_3/real_estates/views/map/map_screen.dart';
+import 'package:flutter_application_3/real_estates/views/my_real_estate_screen.dart';
 import 'package:flutter_application_3/real_estates/views/search/search_real_state_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

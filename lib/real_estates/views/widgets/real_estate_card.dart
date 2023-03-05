@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/common/constants.dart';
 import 'package:flutter_application_3/common/widgets/custom_image_widget.dart';
 import 'package:flutter_application_3/real_estates/models/real_estate_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,7 +25,7 @@ class RealEstateCard extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               CustomImageWidget(
-                imageUrl: "http://192.168.1.104:8000/media/${realEstate.images?[0].url}",
+                imageUrl: "$imagesUrl${realEstate.images?[0].url}",
                 recoverImage: "images/home.png",
               ),
               const SizedBox(height: 8),

@@ -7,7 +7,7 @@ part of 'real_estates_search_state_provider.dart';
 // **************************************************************************
 
 String _$realEstatesSearchResultsHash() =>
-    r'cd6539f7a44714106e6348c3de56344b394f1425';
+    r'dc37bdaeb73797757e149c0d6e011d64eb5d0f15';
 
 /// See also [realEstatesSearchResults].
 @ProviderFor(realEstatesSearchResults)
