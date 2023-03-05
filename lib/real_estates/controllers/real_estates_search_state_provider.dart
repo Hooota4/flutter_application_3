@@ -5,12 +5,40 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'real_estates_search_state_provider.g.dart';
 
-final realEstatesSearchQueryStateProvider = StateProvider<String>((ref) {
-  return '';
-});
+final realEstatesSearchQueryStateProvider = StateProvider<String>((ref) => '');
+
+// from api
+final realEstatesPriceFilterStateProvider = StateProvider<double>((ref) => 0.0);
+
+// from api
+final realEstatesCityFilterStateProvider = StateProvider<List<String>>((ref) => []);
+
+// from api
+final realEstatesStateFilterStateProvider = StateProvider<List<String>>((ref) => []);
+
+enum RealEstateType { all, land, farm, house, villa, store, office, building, apartment }
+
+final realEstatesTypeFilterStateProvider = StateProvider<List<String>>((ref) => []);
+
+enum Operation { all, sell, rent }
+
+final realEstatesOperationFilterStateProvider = StateProvider<List<String>>((ref) => []);
 
 @riverpod
 Future<List<RealEstateModel>> realEstatesSearchResults(RealEstatesSearchResultsRef ref) {
   final searchQuery = ref.watch(realEstatesSearchQueryStateProvider);
-  return ref.watch(realEstatesListSearchProvider(searchQuery).future);
+  final priceFilter = ref.watch(realEstatesPriceFilterStateProvider);
+  final cityFilter = ref.watch(realEstatesCityFilterStateProvider);
+  final stateFilter = ref.watch(realEstatesStateFilterStateProvider);
+  final typeFilter = ref.watch(realEstatesTypeFilterStateProvider);
+  final opFilter = ref.watch(realEstatesOperationFilterStateProvider);
+
+  return ref.watch(realEstatesListSearchProvider(
+    searchQuery,
+    priceFilter,
+    cityFilter,
+    stateFilter,
+    typeFilter,
+    opFilter,
+  ).future);
 }

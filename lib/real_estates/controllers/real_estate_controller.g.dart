@@ -164,8 +164,95 @@ class RealEstateFutureProvider
   }
 }
 
+String _$realEstateFiltersValuesFutureHash() =>
+    r'71380bec78a3222745f8a3cfc12719223b6f0658';
+typedef RealEstateFiltersValuesFutureRef
+    = AutoDisposeFutureProviderRef<FilterValuesModel>;
+
+/// See also [realEstateFiltersValuesFuture].
+@ProviderFor(realEstateFiltersValuesFuture)
+const realEstateFiltersValuesFutureProvider =
+    RealEstateFiltersValuesFutureFamily();
+
+/// See also [realEstateFiltersValuesFuture].
+class RealEstateFiltersValuesFutureFamily
+    extends Family<AsyncValue<FilterValuesModel>> {
+  /// See also [realEstateFiltersValuesFuture].
+  const RealEstateFiltersValuesFutureFamily();
+
+  /// See also [realEstateFiltersValuesFuture].
+  RealEstateFiltersValuesFutureProvider call(
+    int id,
+  ) {
+    return RealEstateFiltersValuesFutureProvider(
+      id,
+    );
+  }
+
+  @override
+  RealEstateFiltersValuesFutureProvider getProviderOverride(
+    covariant RealEstateFiltersValuesFutureProvider provider,
+  ) {
+    return call(
+      provider.id,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'realEstateFiltersValuesFutureProvider';
+}
+
+/// See also [realEstateFiltersValuesFuture].
+class RealEstateFiltersValuesFutureProvider
+    extends AutoDisposeFutureProvider<FilterValuesModel> {
+  /// See also [realEstateFiltersValuesFuture].
+  RealEstateFiltersValuesFutureProvider(
+    this.id,
+  ) : super.internal(
+          (ref) => realEstateFiltersValuesFuture(
+            ref,
+            id,
+          ),
+          from: realEstateFiltersValuesFutureProvider,
+          name: r'realEstateFiltersValuesFutureProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$realEstateFiltersValuesFutureHash,
+          dependencies: RealEstateFiltersValuesFutureFamily._dependencies,
+          allTransitiveDependencies:
+              RealEstateFiltersValuesFutureFamily._allTransitiveDependencies,
+        );
+
+  final int id;
+
+  @override
+  bool operator ==(Object other) {
+    return other is RealEstateFiltersValuesFutureProvider && other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
 String _$realEstatesListSearchHash() =>
-    r'28450b750a5cc5c4d51415d761ae017a1a2bb79a';
+    r'44532b5d9b8f50aeee8d82236b2f6b66905ebc60';
 typedef RealEstatesListSearchRef
     = AutoDisposeFutureProviderRef<List<RealEstateModel>>;
 
@@ -182,9 +269,19 @@ class RealEstatesListSearchFamily
   /// See also [realEstatesListSearch].
   RealEstatesListSearchProvider call(
     String query,
+    double price,
+    List<String> cities,
+    List<String> states,
+    List<String> types,
+    List<String> operationsTypes,
   ) {
     return RealEstatesListSearchProvider(
       query,
+      price,
+      cities,
+      states,
+      types,
+      operationsTypes,
     );
   }
 
@@ -194,6 +291,11 @@ class RealEstatesListSearchFamily
   ) {
     return call(
       provider.query,
+      provider.price,
+      provider.cities,
+      provider.states,
+      provider.types,
+      provider.operationsTypes,
     );
   }
 
@@ -218,10 +320,20 @@ class RealEstatesListSearchProvider
   /// See also [realEstatesListSearch].
   RealEstatesListSearchProvider(
     this.query,
+    this.price,
+    this.cities,
+    this.states,
+    this.types,
+    this.operationsTypes,
   ) : super.internal(
           (ref) => realEstatesListSearch(
             ref,
             query,
+            price,
+            cities,
+            states,
+            types,
+            operationsTypes,
           ),
           from: realEstatesListSearchProvider,
           name: r'realEstatesListSearchProvider',
@@ -235,16 +347,32 @@ class RealEstatesListSearchProvider
         );
 
   final String query;
+  final double price;
+  final List<String> cities;
+  final List<String> states;
+  final List<String> types;
+  final List<String> operationsTypes;
 
   @override
   bool operator ==(Object other) {
-    return other is RealEstatesListSearchProvider && other.query == query;
+    return other is RealEstatesListSearchProvider &&
+        other.query == query &&
+        other.price == price &&
+        other.cities == cities &&
+        other.states == states &&
+        other.types == types &&
+        other.operationsTypes == operationsTypes;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, query.hashCode);
+    hash = _SystemHash.combine(hash, price.hashCode);
+    hash = _SystemHash.combine(hash, cities.hashCode);
+    hash = _SystemHash.combine(hash, states.hashCode);
+    hash = _SystemHash.combine(hash, types.hashCode);
+    hash = _SystemHash.combine(hash, operationsTypes.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -345,6 +473,88 @@ class CreateOrUpdateRealEstateProvider extends AutoDisposeFutureProvider<bool> {
     hash = _SystemHash.combine(hash, realEstate.hashCode);
     hash = _SystemHash.combine(hash, images.hashCode);
     hash = _SystemHash.combine(hash, ownerShipProof.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+String _$deleteRealEstateHash() => r'359c738ffe8c5692ad4758312ca10d02f2f803ba';
+typedef DeleteRealEstateRef = AutoDisposeFutureProviderRef<bool>;
+
+/// See also [deleteRealEstate].
+@ProviderFor(deleteRealEstate)
+const deleteRealEstateProvider = DeleteRealEstateFamily();
+
+/// See also [deleteRealEstate].
+class DeleteRealEstateFamily extends Family<AsyncValue<bool>> {
+  /// See also [deleteRealEstate].
+  const DeleteRealEstateFamily();
+
+  /// See also [deleteRealEstate].
+  DeleteRealEstateProvider call(
+    int id,
+  ) {
+    return DeleteRealEstateProvider(
+      id,
+    );
+  }
+
+  @override
+  DeleteRealEstateProvider getProviderOverride(
+    covariant DeleteRealEstateProvider provider,
+  ) {
+    return call(
+      provider.id,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'deleteRealEstateProvider';
+}
+
+/// See also [deleteRealEstate].
+class DeleteRealEstateProvider extends AutoDisposeFutureProvider<bool> {
+  /// See also [deleteRealEstate].
+  DeleteRealEstateProvider(
+    this.id,
+  ) : super.internal(
+          (ref) => deleteRealEstate(
+            ref,
+            id,
+          ),
+          from: deleteRealEstateProvider,
+          name: r'deleteRealEstateProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$deleteRealEstateHash,
+          dependencies: DeleteRealEstateFamily._dependencies,
+          allTransitiveDependencies:
+              DeleteRealEstateFamily._allTransitiveDependencies,
+        );
+
+  final int id;
+
+  @override
+  bool operator ==(Object other) {
+    return other is DeleteRealEstateProvider && other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
 
     return _SystemHash.finish(hash);
   }
