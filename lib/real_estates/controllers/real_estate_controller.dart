@@ -18,11 +18,19 @@ class RealEstateRepository {
 
   List<RealEstateModel> getRealEstatesList() => _realEstates;
 
-  RealEstateModel? getRealEstate(int id) => _getRealEstate(_realEstates, id);
+  Future<RealEstateModel?> getRealEstate(int id) async => _getRealEstate(_realEstates, id);
 
   Future<List<RealEstateModel>> fetchRealEstatesList() async {
     final res = await dio.get(
       '/get_real_estates',
+      options: Options(headers: {'Authorization': 'Token bccea46620d3dd1d238b0d45f9cd39e2cb607b22'}),
+    );
+    return (res.data['data']['data'] as List<dynamic>).map((e) => RealEstateModel.fromJson(e)).toList();
+  }
+
+  Future<List<RealEstateModel>> fetchMyRealEstatesList() async {
+    final res = await dio.get(
+      '/my_real_estates',
       options: Options(headers: {'Authorization': 'Token bccea46620d3dd1d238b0d45f9cd39e2cb607b22'}),
     );
     return (res.data['data']['data'] as List<dynamic>).map((e) => RealEstateModel.fromJson(e)).toList();
@@ -36,11 +44,18 @@ class RealEstateRepository {
     }
   }
 
+  Stream<List<RealEstateModel>> watchMyRealEstatesList() async* {
+    while (true) {
+      await Future.delayed(const Duration(milliseconds: 10000));
+      List<RealEstateModel> realEstates = await fetchRealEstatesList();
+      yield realEstates;
+    }
+  }
+
   Stream<RealEstateModel?> watchRealEstate(int id) {
     return watchRealEstatesList().map((realEstates) => _getRealEstate(realEstates, id));
   }
 
-  /// Update realEstate or add a new one
   Future<bool> setRealEstate(RealEstateModel realEstate, List<XFile> images, List<XFile> ownerShipProof) async {
     final jsonData = realEstate.toJson();
 
@@ -58,7 +73,7 @@ class RealEstateRepository {
       ),
     ));
 
-    final index = _realEstates.indexWhere((p) => p.id == realEstate.id);
+    // final index = _realEstates.indexWhere((p) => p.id == realEstate.id);
 
     if (realEstate.id == 0) {
       // if not found, add as a new realEstate
@@ -87,7 +102,6 @@ class RealEstateRepository {
     }
   }
 
-  /// Search for realEstates where the title contains the search query
   Future<List<RealEstateModel>> searchRealEstates(String query) async {
     assert(
       _realEstates.length <= 100,
@@ -109,27 +123,54 @@ class RealEstateRepository {
   }
 }
 
+//====================================================================//
+
+// Repo Object
 @riverpod
 RealEstateRepository realEstateRepository(RealEstateRepositoryRef ref) {
   return RealEstateRepository();
 }
 
+// List as stream
 final realEstatesListStreamProvider = StreamProvider.autoDispose<List<RealEstateModel>>((ref) {
   final realEstatesRepository = ref.watch(realEstateRepositoryProvider);
   return realEstatesRepository.watchRealEstatesList();
 });
 
+// My List as stream
+final myRealEstatesListStreamProvider = StreamProvider.autoDispose<List<RealEstateModel>>((ref) {
+  final realEstatesRepository = ref.watch(realEstateRepositoryProvider);
+  return realEstatesRepository.watchMyRealEstatesList();
+});
+
+// one as stream
+final realEstateStreamProvider = StreamProvider.autoDispose.family<RealEstateModel?, int>((ref, id) {
+  final realEstatesRepository = ref.watch(realEstateRepositoryProvider);
+  return realEstatesRepository.watchRealEstate(id);
+});
+
+// list as future
+@riverpod
+Future<List<RealEstateModel>> myRealEstatesListFuture(MyRealEstatesListFutureRef ref) {
+  final realEstatesRepository = ref.watch(realEstateRepositoryProvider);
+  return realEstatesRepository.fetchMyRealEstatesList();
+}
+
+// list as future
 @riverpod
 Future<List<RealEstateModel>> realEstatesListFuture(RealEstatesListFutureRef ref) {
   final realEstatesRepository = ref.watch(realEstateRepositoryProvider);
   return realEstatesRepository.fetchRealEstatesList();
 }
 
-final pealEstateProvider = StreamProvider.autoDispose.family<RealEstateModel?, int>((ref, id) {
+// one as future
+@riverpod
+Future<RealEstateModel?> realEstateFuture(RealEstateFutureRef ref, int id) {
   final realEstatesRepository = ref.watch(realEstateRepositoryProvider);
-  return realEstatesRepository.watchRealEstate(id);
-});
+  return realEstatesRepository.getRealEstate(id);
+}
 
+// search
 @riverpod
 Future<List<RealEstateModel>> realEstatesListSearch(RealEstatesListSearchRef ref, String query) async {
   final link = ref.keepAlive();
@@ -142,6 +183,7 @@ Future<List<RealEstateModel>> realEstatesListSearch(RealEstatesListSearchRef ref
   return realEstatesRepository.searchRealEstates(query);
 }
 
+// create or update
 @riverpod
 Future<bool> createOrUpdateRealEstate(
   CreateOrUpdateRealEstateRef ref,
@@ -152,88 +194,3 @@ Future<bool> createOrUpdateRealEstate(
   final realEstatesRepository = ref.watch(realEstateRepositoryProvider);
   return realEstatesRepository.setRealEstate(realEstate, images, ownerShipProof);
 }
-
-
-
-/*
-@riverpod
-class RealEstateController extends _$RealEstateController {
-  @override
-  List<RealEstateModel> build() {
-    _fetchAll();
-    return [];
-  }
-
-  void _fetchAll() async {
-    final res = await dio.get(
-      '/get_real_estates',
-      options: Options(headers: {'Authorization': 'Token bccea46620d3dd1d238b0d45f9cd39e2cb607b22'}),
-    );
-
-    state = (res.data['data']['data'] as List<dynamic>).map((e) => RealEstateModel.fromJson(e)).toList();
-  }
-
-  void filterRealEstateByName(String value) {
-    state = state.where((element) => element.title.contains(value)).toList();
-  }
-
-  void filterRealEstateByPrice({double? max, double? min}) {
-    if (max != null) {
-      state = state.where((element) => (double.tryParse(element.price) ?? 0.0) <= max).toList();
-    }
-
-    if (min != null) {
-      state = state.where((element) => (double.tryParse(element.price) ?? 0.0) >= min).toList();
-    }
-  }
-
-  void filterRealEstateByType(String value) {
-    state = state.where((element) => element.type.contains(value)).toList();
-  }
-
-  void filterRealEstateByCity(String value) {
-    state = state.where((element) => element.city.contains(value)).toList();
-  }
-
-  void filterRealEstateByState(String value) {
-    state = state.where((element) => element.state.contains(value)).toList();
-  }
-
-  void filterRealEstateByUser(int value) {
-    state = state.where((element) => element.advertiser == value).toList();
-  }
-
-  Future<bool> addRealEstate({required RealEstateModel realEstate, List<XFile>? images = const []}) async {
-    try {
-      final jsonData = realEstate.toJson();
-      jsonData['image1'] = await MultipartFile.fromFile(
-        File(images![0].path).path,
-        filename: File(images[0].path).path.split('/').last,
-      );
-      jsonData['image2'] = await MultipartFile.fromFile(
-        File(images[1].path).path,
-        filename: File(images[1].path).path.split('/').last,
-      );
-      jsonData['image3'] = await MultipartFile.fromFile(
-        File(images[2].path).path,
-        filename: File(images[2].path).path.split('/').last,
-      );
-      jsonData['ownerShipProof'] = await MultipartFile.fromFile(
-        File(images[3].path).path,
-        filename: File(images[3].path).path.split('/').last,
-      );
-
-      final res = await dio.post(
-        '/adding_real_estate',
-        data: FormData.fromMap(jsonData),
-        options: Options(headers: {'Authorization': 'Token bccea46620d3dd1d238b0d45f9cd39e2cb607b22'}),
-      );
-
-      _fetchAll();
-      return ResponseModel.fromJson(res.data).success;
-    } catch (e) {
-      return false;
-    }
-  }
-}
-*/
