@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends ConsumerWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // rebuild the widget when the todo list changes
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -15,8 +16,7 @@ class SplashScreen extends StatelessWidget {
           children: [
             Text(
               'Agar City',
-              style: GoogleFonts.montserrat(
-                  fontSize: 24, fontWeight: FontWeight.bold),
+              style: GoogleFonts.montserrat(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 32),
             Row(
