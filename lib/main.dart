@@ -6,8 +6,8 @@ import 'package:flutter_application_3/real_estates/views/create_advertisement.da
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'auth/views/login.dart';
-import 'auth/views/singup.dart';
+import 'auth/views/login_screen.dart';
+import 'auth/views/singup_screen.dart';
 import 'splash/splash_screen.dart';
 
 late SharedPreferences pref;

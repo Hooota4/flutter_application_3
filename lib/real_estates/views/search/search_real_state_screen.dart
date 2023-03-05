@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/real_estates/views/search/real_estate_grid.dart';
+import 'package:flutter_application_3/real_estates/views/real_estate_grid.dart';
 import 'package:flutter_application_3/real_estates/views/search/real_estate_search_text_field.dart';
 
 class SearchScreen extends StatefulWidget {
