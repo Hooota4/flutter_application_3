@@ -4,7 +4,9 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_application_3/auth/models/response_model.dart';
+import 'package:flutter_application_3/common/constants.dart';
 import 'package:flutter_application_3/common/helpers/http_client.dart';
+import 'package:flutter_application_3/real_estates/controllers/real_estates_search_state_provider.dart';
 import 'package:flutter_application_3/real_estates/models/filter_values.dart';
 import 'package:flutter_application_3/real_estates/models/real_estate_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,15 +27,15 @@ class RealEstateRepository {
   Future<List<RealEstateModel>> fetchRealEstatesList() async {
     final res = await dio.get(
       '/get_real_estates',
-      options: Options(headers: {'Authorization': 'Token bccea46620d3dd1d238b0d45f9cd39e2cb607b22'}),
+      options: Options(headers: {'Authorization': 'Token $token'}),
     );
     return (res.data['data']['data'] as List<dynamic>).map((e) => RealEstateModel.fromJson(e)).toList();
   }
 
   Future<List<RealEstateModel>> fetchMyRealEstatesList() async {
     final res = await dio.get(
-      '/my_real_estates',
-      options: Options(headers: {'Authorization': 'Token bccea46620d3dd1d238b0d45f9cd39e2cb607b22'}),
+      '/my_real_estate',
+      options: Options(headers: {'Authorization': 'Token $token'}),
     );
     return (res.data['data']['data'] as List<dynamic>).map((e) => RealEstateModel.fromJson(e)).toList();
   }
@@ -42,7 +44,7 @@ class RealEstateRepository {
     try {
       final res = await dio.get(
         '/filters_values',
-        options: Options(headers: {'Authorization': 'Token bccea46620d3dd1d238b0d45f9cd39e2cb607b22'}),
+        options: Options(headers: {'Authorization': 'Token $token'}),
       );
 
       final data = ResponseModel.fromJson(res.data);
@@ -57,15 +59,15 @@ class RealEstateRepository {
     while (true) {
       List<RealEstateModel> realEstates = await fetchRealEstatesList();
       yield realEstates;
-      await Future.delayed(const Duration(milliseconds: 10000));
+      await Future.delayed(const Duration(milliseconds: 3000));
     }
   }
 
   Stream<List<RealEstateModel>> watchMyRealEstatesList() async* {
     while (true) {
-      List<RealEstateModel> realEstates = await fetchRealEstatesList();
+      List<RealEstateModel> realEstates = await fetchMyRealEstatesList();
       yield realEstates;
-      await Future.delayed(const Duration(milliseconds: 10000));
+      await Future.delayed(const Duration(milliseconds: 3000));
     }
   }
 
@@ -77,7 +79,7 @@ class RealEstateRepository {
     while (true) {
       FilterValuesModel filtersValues = await fetchRealEstatesFiltersValues();
       yield filtersValues;
-      await Future.delayed(const Duration(milliseconds: 10000));
+      await Future.delayed(const Duration(milliseconds: 3000));
     }
   }
 
@@ -105,7 +107,7 @@ class RealEstateRepository {
       final res = await dio.post(
         '/adding_real_estate',
         data: FormData.fromMap(jsonData),
-        options: Options(headers: {'Authorization': 'Token bccea46620d3dd1d238b0d45f9cd39e2cb607b22'}),
+        options: Options(headers: {'Authorization': 'Token $token'}),
       );
 
       final response = ResponseModel.fromJson(res.data);
@@ -116,7 +118,7 @@ class RealEstateRepository {
       final res = await dio.post(
         '/update_real_estate',
         data: FormData.fromMap(jsonData),
-        options: Options(headers: {'Authorization': 'Token bccea46620d3dd1d238b0d45f9cd39e2cb607b22'}),
+        options: Options(headers: {'Authorization': 'Token $token'}),
       );
 
       final response = ResponseModel.fromJson(res.data);
@@ -131,35 +133,30 @@ class RealEstateRepository {
     final res = await dio.post(
       '/delete_my_estate',
       data: FormData.fromMap({'id': id}),
-      options: Options(headers: {'Authorization': 'Token bccea46620d3dd1d238b0d45f9cd39e2cb607b22'}),
+      options: Options(headers: {'Authorization': 'Token $token'}),
     );
 
     return ResponseModel.fromJson(res.data).success;
   }
 
-  Future<List<RealEstateModel>> searchRealEstates(
-    String query,
-    double price,
-    List<String> cities,
-    List<String> states,
-    List<String> types,
-    List<String> operationsTypes,
-  ) async {
+  Future<List<RealEstateModel>> searchRealEstates(Filters filters) async {
     assert(
       _realEstates.length <= 100,
       'Client-side search should only be performed if the number of realEstates is small. '
       'Consider doing server-side search for larger datasets.',
     );
+
     // Get all realEstates
     final realEstatesList = await fetchRealEstatesList();
-    if (price > 0) realEstatesList.where((realEstate) => (int.tryParse(realEstate.price) ?? 0) < price);
-    if (cities.isEmpty) realEstatesList.where((realEstate) => cities.contains(realEstate.city));
-    if (states.isEmpty) realEstatesList.where((realEstate) => states.contains(realEstate.state));
-    if (types.isEmpty) realEstatesList.where((realEstate) => types.contains(realEstate.type));
-    if (operationsTypes.isEmpty) realEstatesList.where((realEstate) => operationsTypes.contains(realEstate.operation));
+    List<RealEstateModel> newList = realEstatesList;
+    if (filters.priceFilter > 0) newList = newList.where((realEstate) => (int.tryParse(realEstate.price) ?? 0) < filters.priceFilter).toList();
+    if (filters.cityFilter.isNotEmpty) newList = newList.where((realEstate) => filters.cityFilter.contains(realEstate.city)).toList();
+    if (filters.stateFilter.isNotEmpty) newList = newList.where((realEstate) => filters.stateFilter.contains(realEstate.state)).toList();
+    if (filters.typeFilter.isNotEmpty) newList = newList.where((realEstate) => filters.typeFilter.contains(realEstate.type)).toList();
+    if (filters.opFilter.isNotEmpty) newList = newList.where((realEstate) => filters.opFilter.contains(realEstate.operation)).toList();
 
     // Match all realEstates where the title contains the query
-    return realEstatesList.where((realEstate) => realEstate.title.toLowerCase().contains(query.toLowerCase())).toList();
+    return newList.where((realEstate) => realEstate.title.toLowerCase().contains(filters.searchQuery.toLowerCase())).toList();
   }
 
   static RealEstateModel? _getRealEstate(List<RealEstateModel> realEstates, int id) {
@@ -233,30 +230,14 @@ Future<FilterValuesModel> realEstateFiltersValuesFuture(RealEstateFiltersValuesF
 
 // search
 @riverpod
-Future<List<RealEstateModel>> realEstatesListSearch(
-  RealEstatesListSearchRef ref,
-  String query,
-  double price,
-  List<String> cities,
-  List<String> states,
-  List<String> types,
-  List<String> operationsTypes,
-) async {
+Future<List<RealEstateModel>> realEstatesListSearch(RealEstatesListSearchRef ref, Filters filters) async {
   final link = ref.keepAlive();
   // * keep previous search results in memory for 60 seconds
-  final timer = Timer(const Duration(seconds: 60), () {
-    link.close();
-  });
-  ref.onDispose(() => timer.cancel());
+  final timer = Timer(const Duration(seconds: 60), link.close);
+  ref.onDispose(timer.cancel);
+
   final realEstatesRepository = ref.watch(realEstateRepositoryProvider);
-  return realEstatesRepository.searchRealEstates(
-    query,
-    price,
-    cities,
-    states,
-    types,
-    operationsTypes,
-  );
+  return realEstatesRepository.searchRealEstates(filters);
 }
 
 // create or update

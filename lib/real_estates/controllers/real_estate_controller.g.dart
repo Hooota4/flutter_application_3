@@ -252,7 +252,7 @@ class RealEstateFiltersValuesFutureProvider
 }
 
 String _$realEstatesListSearchHash() =>
-    r'44532b5d9b8f50aeee8d82236b2f6b66905ebc60';
+    r'2a67cc46f3e3bb3e89b705eed1396ac265252bf9';
 typedef RealEstatesListSearchRef
     = AutoDisposeFutureProviderRef<List<RealEstateModel>>;
 
@@ -268,20 +268,10 @@ class RealEstatesListSearchFamily
 
   /// See also [realEstatesListSearch].
   RealEstatesListSearchProvider call(
-    String query,
-    double price,
-    List<String> cities,
-    List<String> states,
-    List<String> types,
-    List<String> operationsTypes,
+    Filters filters,
   ) {
     return RealEstatesListSearchProvider(
-      query,
-      price,
-      cities,
-      states,
-      types,
-      operationsTypes,
+      filters,
     );
   }
 
@@ -290,12 +280,7 @@ class RealEstatesListSearchFamily
     covariant RealEstatesListSearchProvider provider,
   ) {
     return call(
-      provider.query,
-      provider.price,
-      provider.cities,
-      provider.states,
-      provider.types,
-      provider.operationsTypes,
+      provider.filters,
     );
   }
 
@@ -319,21 +304,11 @@ class RealEstatesListSearchProvider
     extends AutoDisposeFutureProvider<List<RealEstateModel>> {
   /// See also [realEstatesListSearch].
   RealEstatesListSearchProvider(
-    this.query,
-    this.price,
-    this.cities,
-    this.states,
-    this.types,
-    this.operationsTypes,
+    this.filters,
   ) : super.internal(
           (ref) => realEstatesListSearch(
             ref,
-            query,
-            price,
-            cities,
-            states,
-            types,
-            operationsTypes,
+            filters,
           ),
           from: realEstatesListSearchProvider,
           name: r'realEstatesListSearchProvider',
@@ -346,33 +321,17 @@ class RealEstatesListSearchProvider
               RealEstatesListSearchFamily._allTransitiveDependencies,
         );
 
-  final String query;
-  final double price;
-  final List<String> cities;
-  final List<String> states;
-  final List<String> types;
-  final List<String> operationsTypes;
+  final Filters filters;
 
   @override
   bool operator ==(Object other) {
-    return other is RealEstatesListSearchProvider &&
-        other.query == query &&
-        other.price == price &&
-        other.cities == cities &&
-        other.states == states &&
-        other.types == types &&
-        other.operationsTypes == operationsTypes;
+    return other is RealEstatesListSearchProvider && other.filters == filters;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, query.hashCode);
-    hash = _SystemHash.combine(hash, price.hashCode);
-    hash = _SystemHash.combine(hash, cities.hashCode);
-    hash = _SystemHash.combine(hash, states.hashCode);
-    hash = _SystemHash.combine(hash, types.hashCode);
-    hash = _SystemHash.combine(hash, operationsTypes.hashCode);
+    hash = _SystemHash.combine(hash, filters.hashCode);
 
     return _SystemHash.finish(hash);
   }

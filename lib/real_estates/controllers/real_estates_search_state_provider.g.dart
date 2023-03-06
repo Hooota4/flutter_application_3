@@ -6,8 +6,23 @@ part of 'real_estates_search_state_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$filterStateHash() => r'caa32401a8ce63ab1f24d5ec03840aa0432a2b6a';
+
+/// See also [FilterState].
+@ProviderFor(FilterState)
+final filterStateProvider =
+    AutoDisposeNotifierProvider<FilterState, Filters>.internal(
+  FilterState.new,
+  name: r'filterStateProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$filterStateHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$FilterState = AutoDisposeNotifier<Filters>;
 String _$realEstatesSearchResultsHash() =>
-    r'dc37bdaeb73797757e149c0d6e011d64eb5d0f15';
+    r'12ea1a02b263bb830c925b6d77c4b90716d5e200';
 
 /// See also [realEstatesSearchResults].
 @ProviderFor(realEstatesSearchResults)

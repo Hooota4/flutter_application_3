@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -61,7 +60,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
       final realEstatesListValue = ref.watch(realEstatesListStreamProvider);
-      log(realEstatesListValue.value.toString());
+      // log(realEstatesListValue.value.toString());
 
       return AsyncValueWidget<List<RealEstateModel>>(
         value: realEstatesListValue,

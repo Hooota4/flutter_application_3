@@ -34,8 +34,6 @@ class RealEstateCard extends ConsumerWidget {
               Text(realEstate.title, style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 4),
               Text("${realEstate.price} SDG", style: Theme.of(context).textTheme.titleSmall),
-              const SizedBox(height: 24),
-              Text('Quantity: ${0}', style: Theme.of(context).textTheme.bodySmall)
             ],
           ),
         ),

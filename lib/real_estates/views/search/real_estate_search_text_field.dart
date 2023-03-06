@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/common/constants.dart';
 import 'package:flutter_application_3/common/helpers/to_capitalized.dart';
 import 'package:flutter_application_3/common/widgets/async_value_widget.dart';
 import 'package:flutter_application_3/real_estates/controllers/real_estate_controller.dart';
@@ -22,6 +23,7 @@ class _RealEstatesSearchTextFieldState extends ConsumerState<RealEstatesSearchTe
   void dispose() {
     // * TextEditingControllers should be always disposed
     _controller.dispose();
+
     super.dispose();
   }
 
@@ -35,8 +37,8 @@ class _RealEstatesSearchTextFieldState extends ConsumerState<RealEstatesSearchTe
             child: ValueListenableBuilder<TextEditingValue>(
               valueListenable: _controller,
               builder: (context, value, _) {
-                return TextField(
-                  controller: _controller,
+                return TextFormField(
+                  initialValue: ref.watch(filterStateProvider).searchQuery,
                   autofocus: false,
                   style: Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
@@ -56,13 +58,13 @@ class _RealEstatesSearchTextFieldState extends ConsumerState<RealEstatesSearchTe
                         ? IconButton(
                             onPressed: () {
                               _controller.clear();
-                              ref.read(realEstatesSearchQueryStateProvider.notifier).state = '';
+                              ref.watch(filterStateProvider.notifier).update(searchQuery: "");
                             },
                             icon: const Icon(Icons.clear),
                           )
                         : null,
                   ),
-                  onChanged: (text) => ref.read(realEstatesSearchQueryStateProvider.notifier).state = text,
+                  onChanged: (query) => ref.watch(filterStateProvider.notifier).update(searchQuery: query),
                 );
               },
             ),
@@ -82,18 +84,11 @@ class _RealEstatesSearchTextFieldState extends ConsumerState<RealEstatesSearchTe
   }
 }
 
-class FiltersValueWidget extends ConsumerStatefulWidget {
+class FiltersValueWidget extends ConsumerWidget {
   const FiltersValueWidget({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _FiltersValueWidgetState();
-}
-
-class _FiltersValueWidgetState extends ConsumerState<FiltersValueWidget> {
-  double slider = 0.0;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final filtersValuesValue = ref.watch(realEstatesFiltersValuesStreamProvider);
 
     return AsyncValueWidget<FilterValuesModel>(
@@ -103,22 +98,27 @@ class _FiltersValueWidgetState extends ConsumerState<FiltersValueWidget> {
           width: MediaQuery.of(context).size.width - 36,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Price'),
+              const SizedBox(height: 16),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("0"),
-                  Slider(
-                    label: 'Price',
-                    min: 0.0,
-                    value: slider,
-                    divisions: (filtersValues?.maxPrice.toDouble() ?? 0) ~/ 1000,
-                    max: filtersValues?.maxPrice.toDouble() ?? 0,
-                    onChanged: (value) => setState(() => slider = value),
-                    onChangeEnd: (value) => ref.read(realEstatesPriceFilterStateProvider.notifier).state = value,
-                  ),
-                  Text(slider.toStringAsFixed(0)),
+                  Text("Filter Real Estates", style: Theme.of(context).textTheme.titleLarge),
+                  IconButton(onPressed: ref.watch(filterStateProvider.notifier).update, icon: const Icon(Icons.clear))
                 ],
+              ),
+              const Divider(),
+              const SizedBox(height: 24),
+              const Text('Price'),
+              Slider(
+                label: "${ref.watch(filterStateProvider).priceFilter ~/ 1000}K SDG",
+                min: 0.0,
+                value: ref.watch(filterStateProvider).priceFilter,
+                divisions: (filtersValues?.maxPrice.toDouble() ?? 0) ~/ 1000,
+                max: (filtersValues?.maxPrice.toDouble() ?? 1000000000000) + 10000,
+                onChanged: (value) => ref.watch(filterStateProvider.notifier).update(priceFilter: value),
+                onChangeEnd: (value) => ref.watch(filterStateProvider.notifier).update(priceFilter: value),
               ),
               const SizedBox(height: 16),
               MultiSelectDialogField<String>(
@@ -131,9 +131,10 @@ class _FiltersValueWidgetState extends ConsumerState<FiltersValueWidget> {
                 checkColor: Colors.white,
                 selectedColor: Colors.deepPurple.shade200,
                 unselectedColor: Colors.grey,
-                dialogHeight: MediaQuery.of(context).size.height / 2,
+                dialogHeight: MediaQuery.of(context).size.height / 3,
                 items: filtersValues?.states.map((city) => MultiSelectItem(city, city)).toList() ?? [],
-                onConfirm: (values) => ref.read(realEstatesStateFilterStateProvider.notifier).state = values,
+                onConfirm: (values) => ref.watch(filterStateProvider.notifier).update(stateFilter: values),
+                initialValue: ref.watch(filterStateProvider).stateFilter,
               ),
               const SizedBox(height: 16),
               MultiSelectDialogField<String>(
@@ -144,11 +145,12 @@ class _FiltersValueWidgetState extends ConsumerState<FiltersValueWidget> {
                 itemsTextStyle: const TextStyle(color: Colors.white),
                 selectedItemsTextStyle: const TextStyle(color: Colors.white),
                 checkColor: Colors.white,
-                selectedColor: Colors.deepPurple.shade100,
+                selectedColor: Colors.deepPurple.shade200,
                 unselectedColor: Colors.grey,
-                dialogHeight: MediaQuery.of(context).size.height / 2,
+                dialogHeight: MediaQuery.of(context).size.height / 3,
                 items: filtersValues?.cities.map((city) => MultiSelectItem(city, city)).toList() ?? [],
-                onConfirm: (values) => ref.read(realEstatesCityFilterStateProvider.notifier).state = values,
+                onConfirm: (values) => ref.watch(filterStateProvider.notifier).update(cityFilter: values),
+                initialValue: ref.watch(filterStateProvider).cityFilter,
               ),
               const SizedBox(height: 16),
               MultiSelectDialogField<String>(
@@ -159,13 +161,12 @@ class _FiltersValueWidgetState extends ConsumerState<FiltersValueWidget> {
                 itemsTextStyle: const TextStyle(color: Colors.white),
                 selectedItemsTextStyle: const TextStyle(color: Colors.white),
                 checkColor: Colors.white,
-                selectedColor: Colors.deepPurple.shade100,
+                selectedColor: Colors.deepPurple.shade200,
                 unselectedColor: Colors.grey,
-                dialogHeight: MediaQuery.of(context).size.height / 2,
-                items: RealEstateType.values
-                    .map((realEstateType) => MultiSelectItem(realEstateType.name.toCapitalized(), realEstateType.name.toCapitalized()))
-                    .toList(),
-                onConfirm: (values) => ref.read(realEstatesTypeFilterStateProvider.notifier).state = values,
+                dialogHeight: MediaQuery.of(context).size.height / 3,
+                items: RealEstateType.values.map((types) => MultiSelectItem(types.name.toCapitalized(), types.name.toCapitalized())).toList(),
+                onConfirm: (values) => ref.watch(filterStateProvider.notifier).update(typeFilter: values),
+                initialValue: ref.watch(filterStateProvider).typeFilter,
               ),
               const SizedBox(height: 16),
               MultiSelectDialogField<String>(
@@ -176,12 +177,12 @@ class _FiltersValueWidgetState extends ConsumerState<FiltersValueWidget> {
                 itemsTextStyle: const TextStyle(color: Colors.white),
                 selectedItemsTextStyle: const TextStyle(color: Colors.white),
                 checkColor: Colors.white,
-                selectedColor: Colors.deepPurple.shade100,
+                selectedColor: Colors.deepPurple.shade200,
                 unselectedColor: Colors.grey,
-                dialogHeight: MediaQuery.of(context).size.height / 2,
-                items:
-                    Operation.values.map((operationType) => MultiSelectItem(operationType.name.toCapitalized(), operationType.name.toCapitalized())).toList(),
-                onConfirm: (values) => ref.read(realEstatesOperationFilterStateProvider.notifier).state = values,
+                dialogHeight: MediaQuery.of(context).size.height / 3,
+                items: Operation.values.map((opTypes) => MultiSelectItem(opTypes.name.toCapitalized(), opTypes.name.toCapitalized())).toList(),
+                onConfirm: (values) => ref.watch(filterStateProvider.notifier).update(opFilter: values),
+                initialValue: ref.watch(filterStateProvider).opFilter,
               ),
             ],
           ),
@@ -190,61 +191,3 @@ class _FiltersValueWidgetState extends ConsumerState<FiltersValueWidget> {
     );
   }
 }
-// import 'package:flutter/material.dart';
-
-// void main() {
-// runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-// const MyApp({Key? key}) : super(key: key);
-// @override
-// Widget build(BuildContext context) {
-// 	return MaterialApp(
-// 	title: 'Flutter DropDownButton',
-// 	theme: ThemeData(
-// 		primarySwatch: Colors.green,
-// 	),
-// 	home: const MyHomePage(),
-// 	debugShowCheckedModeBanner: false,
-// 	);
-// }
-// }
-
-// class MyHomePage extends StatefulWidget {
-// const MyHomePage({Key? key}) : super(key: key);
-
-// @override
-// _MyHomePageState createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-	
-// // Initial Selected Value
-// String dropdownvalue = 'Item 1';
-
-// // List of items in our dropdown menu
-// var items = [	
-// 	'Item 1',
-// 	'Item 2',
-// 	'Item 3',
-// 	'Item 4',
-// 	'Item 5',
-// ];
-// @override
-// Widget build(BuildContext context) {
-// 	return Scaffold(
-// 	appBar: AppBar(
-// 		title: const Text("Geeksforgeeks"),
-// 	),
-// 	body: Center(
-// 		child: Column(
-// 		mainAxisAlignment: MainAxisAlignment.center,
-// 		children: [
-		
-// 		],
-// 		),
-// 	),
-// 	);
-// }
-// }
