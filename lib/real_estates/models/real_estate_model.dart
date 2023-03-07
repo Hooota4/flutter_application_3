@@ -1,3 +1,4 @@
+import 'package:flutter_application_3/auth/models/user_model.dart';
 import 'package:flutter_application_3/real_estates/models/images_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -8,7 +9,7 @@ part 'real_estate_model.g.dart';
 class RealEstateModel with _$RealEstateModel {
   const factory RealEstateModel({
     required int id,
-    required int advertiser,
+    User? advertiser,
     required String title,
     required String description,
     required String nationalID,

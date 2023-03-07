@@ -1,12 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/auth/controller/auth.dart';
-import 'package:flutter_application_3/constants.dart';
+import 'package:flutter_application_3/common/constants.dart';
 import 'package:flutter_application_3/real_estates/controllers/real_estate_controller.dart';
 import 'package:flutter_application_3/real_estates/models/real_estate_model.dart';
-import 'package:flutter_application_3/real_estates/views/image_picker.dart';
-import 'package:flutter_application_3/real_estates/views/location_picker.dart';
+import 'package:flutter_application_3/real_estates/views/map/location_picker.dart';
+import 'package:flutter_application_3/real_estates/views/widgets/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -148,10 +147,11 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                           children: [
                             IconButton(
                                 onPressed: () async {
-                                  location = await showDialog(
-                                    context: context,
-                                    builder: (context) => const LocationPicker(),
-                                  );
+                                  location = (await showDialog(
+                                        context: context,
+                                        builder: (context) => const LocationPicker(),
+                                      )) ??
+                                      const LatLng(0, 0);
                                   setState(() {});
                                 },
                                 icon: const Icon(Icons.map, size: 64)),
@@ -162,10 +162,10 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                           children: [
                             IconButton(
                                 onPressed: () async {
-                                  images = await showDialog(
+                                  images = (await showDialog(
                                         context: context,
-                                        builder: (context) => const ImagesUploader(title: "Real Estate Photos", imageCount: 3),
-                                      ) ??
+                                        builder: (context) => const ImagesUploader(title: "Real Estate Photos"),
+                                      )) ??
                                       [];
                                   setState(() {});
                                 },
@@ -177,10 +177,10 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                           children: [
                             IconButton(
                                 onPressed: () async {
-                                  ownerShipProof = await showDialog(
+                                  ownerShipProof = (await showDialog(
                                         context: context,
                                         builder: (context) => const ImagesUploader(title: "Ownership Proof "),
-                                      ) ??
+                                      )) ??
                                       [];
                                   setState(() {});
                                 },
@@ -192,12 +192,9 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                     ),
                     const SizedBox(height: 16),
                     Consumer(builder: (context, ref, child) {
-                      final auth = ref.watch(authControllerProvider);
-
                       return ElevatedButton(
                         onPressed: () async {
                           final estate = RealEstateModel(
-                            advertiser: auth.user!.id!,
                             title: _title.text.trim(),
                             type: type ?? "",
                             facilitiesNum: _facilityNum.text.trim(),
@@ -207,11 +204,12 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                             price: _price.text.trim(),
                             approval: "Waiting",
                             nationalID: "", //canceled
-                            location: jsonEncode(location.toJson()), id: 0, operation: '',
+                            location: jsonEncode(location.toJson()),
+                            id: 0,
+                            operation: operation ?? "Sell",
                           );
 
                           final result = await ref.read(createOrUpdateRealEstateProvider(estate, images, ownerShipProof).future);
-                          print(result);
                           if (result && context.mounted) Navigator.of(context).pushReplacementNamed("homepage");
                         },
                         child: const Text("Add Advertisement", style: TextStyle(fontSize: 16)),

@@ -21,7 +21,7 @@ RealEstateModel _$RealEstateModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$RealEstateModel {
   int get id => throw _privateConstructorUsedError;
-  int get advertiser => throw _privateConstructorUsedError;
+  User? get advertiser => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   String get nationalID => throw _privateConstructorUsedError;
@@ -49,7 +49,7 @@ abstract class $RealEstateModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      int advertiser,
+      User? advertiser,
       String title,
       String description,
       String nationalID,
@@ -62,6 +62,8 @@ abstract class $RealEstateModelCopyWith<$Res> {
       String price,
       String approval,
       List<ImageModel>? images});
+
+  $UserCopyWith<$Res>? get advertiser;
 }
 
 /// @nodoc
@@ -78,7 +80,7 @@ class _$RealEstateModelCopyWithImpl<$Res, $Val extends RealEstateModel>
   @override
   $Res call({
     Object? id = null,
-    Object? advertiser = null,
+    Object? advertiser = freezed,
     Object? title = null,
     Object? description = null,
     Object? nationalID = null,
@@ -97,10 +99,10 @@ class _$RealEstateModelCopyWithImpl<$Res, $Val extends RealEstateModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      advertiser: null == advertiser
+      advertiser: freezed == advertiser
           ? _value.advertiser
           : advertiser // ignore: cast_nullable_to_non_nullable
-              as int,
+              as User?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -151,6 +153,18 @@ class _$RealEstateModelCopyWithImpl<$Res, $Val extends RealEstateModel>
               as List<ImageModel>?,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res>? get advertiser {
+    if (_value.advertiser == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.advertiser!, (value) {
+      return _then(_value.copyWith(advertiser: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -163,7 +177,7 @@ abstract class _$$_RealEstateModelCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      int advertiser,
+      User? advertiser,
       String title,
       String description,
       String nationalID,
@@ -176,6 +190,9 @@ abstract class _$$_RealEstateModelCopyWith<$Res>
       String price,
       String approval,
       List<ImageModel>? images});
+
+  @override
+  $UserCopyWith<$Res>? get advertiser;
 }
 
 /// @nodoc
@@ -190,7 +207,7 @@ class __$$_RealEstateModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? advertiser = null,
+    Object? advertiser = freezed,
     Object? title = null,
     Object? description = null,
     Object? nationalID = null,
@@ -209,10 +226,10 @@ class __$$_RealEstateModelCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      advertiser: null == advertiser
+      advertiser: freezed == advertiser
           ? _value.advertiser
           : advertiser // ignore: cast_nullable_to_non_nullable
-              as int,
+              as User?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -270,7 +287,7 @@ class __$$_RealEstateModelCopyWithImpl<$Res>
 class _$_RealEstateModel implements _RealEstateModel {
   const _$_RealEstateModel(
       {required this.id,
-      required this.advertiser,
+      this.advertiser,
       required this.title,
       required this.description,
       required this.nationalID,
@@ -291,7 +308,7 @@ class _$_RealEstateModel implements _RealEstateModel {
   @override
   final int id;
   @override
-  final int advertiser;
+  final User? advertiser;
   @override
   final String title;
   @override
@@ -393,7 +410,7 @@ class _$_RealEstateModel implements _RealEstateModel {
 abstract class _RealEstateModel implements RealEstateModel {
   const factory _RealEstateModel(
       {required final int id,
-      required final int advertiser,
+      final User? advertiser,
       required final String title,
       required final String description,
       required final String nationalID,
@@ -413,7 +430,7 @@ abstract class _RealEstateModel implements RealEstateModel {
   @override
   int get id;
   @override
-  int get advertiser;
+  User? get advertiser;
   @override
   String get title;
   @override

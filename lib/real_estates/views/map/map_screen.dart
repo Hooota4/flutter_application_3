@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/common/widgets/async_value_widget.dart';
 import 'package:flutter_application_3/real_estates/controllers/real_estate_controller.dart';
 import 'package:flutter_application_3/real_estates/models/real_estate_model.dart';
+import 'package:flutter_application_3/real_estates/views/real_estate_detail.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -61,7 +61,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
       final realEstatesListValue = ref.watch(realEstatesListStreamProvider);
-      log(realEstatesListValue.value.toString());
+      // log(realEstatesListValue.value.toString());
 
       return AsyncValueWidget<List<RealEstateModel>>(
         value: realEstatesListValue,
@@ -72,12 +72,16 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             zoom: 11,
           ),
           markers: {
-            ...realEstates.map((e) {
+            ...?realEstates?.map((e) {
               return Marker(
                 markerId: MarkerId(e.id.toString()),
                 icon: home,
                 infoWindow: InfoWindow(title: e.title, snippet: e.description),
                 position: LatLng.fromJson(jsonDecode(e.location))!,
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => RealEstateDetailsScreen(id: e.id),
+                ),
               );
             })
           },

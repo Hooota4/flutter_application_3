@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagesUploader extends StatefulWidget {
-  final int imageCount;
+  final int imagesCount;
   final String title;
-  const ImagesUploader({super.key, required this.title, this.imageCount = 1});
+  const ImagesUploader({super.key, required this.title, this.imagesCount = -1});
 
   @override
   State<ImagesUploader> createState() => _ImagesUploaderState();
@@ -14,10 +14,10 @@ class ImagesUploader extends StatefulWidget {
 class _ImagesUploaderState extends State<ImagesUploader> {
   List<XFile> images = [];
 
-  void _pickImages() async {
+  void _pickImages(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
 
-    final XFile? image = await picker.pickImage(source: ImageSource.camera);
+    final XFile? image = await picker.pickImage(source: source);
     if (image != null) setState(() => images.add(image));
   }
 
@@ -45,11 +45,21 @@ class _ImagesUploaderState extends State<ImagesUploader> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: images.length == widget.imageCount
+      floatingActionButton: (widget.imagesCount > 0 && widget.imagesCount == images.length)
           ? null
-          : FloatingActionButton(
-              onPressed: _pickImages,
-              child: const Icon(Icons.camera),
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FloatingActionButton(
+                  onPressed: () => _pickImages(ImageSource.camera),
+                  child: const Icon(Icons.camera),
+                ),
+                const SizedBox(width: 24.0),
+                FloatingActionButton(
+                  onPressed: () => _pickImages(ImageSource.gallery),
+                  child: const Icon(Icons.filter),
+                ),
+              ],
             ),
     );
   }
