@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/auth/controller/auth.dart';
 import 'package:flutter_application_3/common/constants.dart';
 import 'package:flutter_application_3/real_estates/controllers/real_estate_controller.dart';
 import 'package:flutter_application_3/real_estates/models/real_estate_model.dart';
@@ -165,7 +164,7 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                                 onPressed: () async {
                                   images = (await showDialog(
                                         context: context,
-                                        builder: (context) => const ImagesUploader(title: "Real Estate Photos", imageCount: 3),
+                                        builder: (context) => const ImagesUploader(title: "Real Estate Photos", imagesCount: 3),
                                       )) ??
                                       [];
                                   setState(() {});
@@ -193,12 +192,9 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                     ),
                     const SizedBox(height: 16),
                     Consumer(builder: (context, ref, child) {
-                      final auth = ref.watch(authControllerProvider);
-
                       return ElevatedButton(
                         onPressed: () async {
                           final estate = RealEstateModel(
-                            advertiser: auth.user!.id!,
                             title: _title.text.trim(),
                             type: type ?? "",
                             facilitiesNum: _facilityNum.text.trim(),
@@ -208,11 +204,12 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                             price: _price.text.trim(),
                             approval: "Waiting",
                             nationalID: "", //canceled
-                            location: jsonEncode(location.toJson()), id: 0, operation: '',
+                            location: jsonEncode(location.toJson()),
+                            id: 0,
+                            operation: operation ?? "Sell",
                           );
 
                           final result = await ref.read(createOrUpdateRealEstateProvider(estate, images, ownerShipProof).future);
-                          print(result);
                           if (result && context.mounted) Navigator.of(context).pushReplacementNamed("homepage");
                         },
                         child: const Text("Add Advertisement", style: TextStyle(fontSize: 16)),

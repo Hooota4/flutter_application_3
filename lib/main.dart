@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-// ignore: unused_import
-import 'package:flutter_application_3/Admin/LoginAdmin.dart';
+import 'package:flutter_application_3/auth/controller/auth.dart';
 import 'package:flutter_application_3/home/homepage.dart';
 import 'package:flutter_application_3/real_estates/views/create_advertisement.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,12 +14,16 @@ late SharedPreferences pref;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   pref = await SharedPreferences.getInstance();
+  final container = ProviderContainer();
 
-  runApp(const ProviderScope(child: MyApp()));
+  final token = container.read(authCacheProvider).token;
+
+  runApp(ProviderScope(child: MyApp(token: token)));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final String? token;
+  const MyApp({Key? key, this.token}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "login",
+      initialRoute: token == null ? "login" : "homepage",
       routes: {
         "splash": (context) => const SplashScreen(),
         "login": (context) => const Login(),

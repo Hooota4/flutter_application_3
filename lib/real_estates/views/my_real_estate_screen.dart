@@ -6,6 +6,7 @@ import 'package:flutter_application_3/real_estates/models/real_estate_model.dart
 import 'package:flutter_application_3/real_estates/views/real_estate_detail.dart';
 import 'package:flutter_application_3/real_estates/views/widgets/real_estate_card.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MyRealEstatesScreen extends ConsumerStatefulWidget {
   const MyRealEstatesScreen({super.key});
@@ -59,7 +60,12 @@ class _MyRealEstatesScreenState extends ConsumerState<MyRealEstatesScreen> {
                             children: [
                               RealEstateCard(
                                 realEstate: realEstate,
-                                onPressed: () => showDialog(context: context, builder: (context) => RealEstateDetailsScreen(id: realEstate.id)),
+                                onPressed: () => realEstate.approval != "Accepted"
+                                    ? Fluttertoast.showToast(msg: "Real Estate is not ACCEPTED yet", toastLength: Toast.LENGTH_LONG)
+                                    : showDialog(
+                                        context: context,
+                                        builder: (context) => RealEstateDetailsScreen(id: realEstate.id),
+                                      ),
                               ),
                               Align(
                                 alignment: Alignment.topRight,

@@ -9,7 +9,9 @@ part of 'real_estate_model.dart';
 _$_RealEstateModel _$$_RealEstateModelFromJson(Map<String, dynamic> json) =>
     _$_RealEstateModel(
       id: json['id'] as int,
-      advertiser: json['advertiser'] as int,
+      advertiser: json['advertiser'] == null
+          ? null
+          : User.fromJson(json['advertiser'] as Map<String, dynamic>),
       title: json['title'] as String,
       description: json['description'] as String,
       nationalID: json['nationalID'] as String,

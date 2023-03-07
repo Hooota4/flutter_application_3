@@ -30,97 +30,105 @@ class _RealEstateDetailsScreenState extends ConsumerState<RealEstateDetailsScree
                 appBar: AppBar(
                   title: Text(realEstate.title.toTitleCase()),
                 ),
-                body: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    RealEstateImagesSlider(images: realEstate.images),
-                    const SizedBox(height: 16),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "${realEstate.price} SDG",
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.purple.shade300),
-                          ),
-                          Text(
-                            "${realEstate.state}, ${realEstate.city}",
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.purple.shade300),
-                          )
-                        ],
-                      ),
-                    ),
-                    const Divider(),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            realEstate.type,
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.purple.shade300),
-                          ),
-                          Text(
-                            "for",
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.purple.shade300),
-                          ),
-                          Text(
-                            realEstate.operation,
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.purple.shade300),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Divider(),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
+                body: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      RealEstateImagesSlider(images: realEstate.images),
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const CircleAvatar(foregroundImage: AssetImage('image/avatar.png'), backgroundColor: Colors.grey, radius: 30),
+                                const SizedBox(width: 24),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${realEstate.advertiser?.firstName} ${realEstate.advertiser?.forthName}",
+                                      style: Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                    Text(
+                                      "T: ${realEstate.advertiser?.phone} ",
+                                      style: Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: 24),
+                            const Divider(),
+                            const SizedBox(height: 24),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Price",
+                                  style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.purple.shade300),
+                                ),
+                                Text("${realEstate.price} SDG", style: Theme.of(context).textTheme.bodyLarge)
+                              ],
+                            ),
+                            const Divider(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Address",
+                                  style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.purple.shade300),
+                                ),
+                                Text("${realEstate.state}, ${realEstate.city}", style: Theme.of(context).textTheme.bodyLarge)
+                              ],
+                            ),
+                            const Divider(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Type",
+                                  style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.purple.shade300),
+                                ),
+                                Text("${realEstate.type}, for ${realEstate.operation}", style: Theme.of(context).textTheme.bodyLarge)
+                              ],
+                            ),
+                            const Divider(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Facilities Number",
+                                  style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.purple.shade300),
+                                ),
+                                Text(realEstate.facilitiesNum, style: Theme.of(context).textTheme.bodyLarge)
+                              ],
+                            ),
+                            const Divider(),
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                const Text("Advertizer"),
                                 Text(
-                                  "${realEstate.advertiser} ",
+                                  "Details",
                                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.purple.shade300),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: Colors.grey),
+                                  ),
+                                  child: Text("${realEstate.description} "),
                                 ),
                               ],
                             ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                const Text("Facilities"),
-                                Text(
-                                  "${realEstate.facilitiesNum} ",
-                                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.purple.shade300),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const Divider(),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const Text("Details"),
-                          Text(
-                            "${realEstate.description} ",
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.purple.shade300),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
       },

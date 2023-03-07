@@ -7,7 +7,7 @@ part of 'real_estate_controller.dart';
 // **************************************************************************
 
 String _$realEstateRepositoryHash() =>
-    r'735b7ebc80861a848f12ea211d0b68dca1c9cf78';
+    r'ecf7c046eafb3e4e07233acbfb6fbb7954b46f6c';
 
 /// See also [realEstateRepository].
 @ProviderFor(realEstateRepository)
