@@ -40,9 +40,9 @@ Dio dioHttpClient(DioHttpClientRef ref) {
 //   return client;
 // });
 
-final dio = Dio(BaseOptions(
-  baseUrl: apiUrl,
-  connectTimeout: const Duration(seconds: 10),
-  receiveTimeout: const Duration(seconds: 10),
-  headers: {HttpHeaders.userAgentHeader: 'dio', 'common-header': 'xx'},
-));
+// final dio = Dio(BaseOptions(
+//   baseUrl: apiUrl,
+//   connectTimeout: const Duration(seconds: 10),
+//   receiveTimeout: const Duration(seconds: 10),
+//   headers: {HttpHeaders.userAgentHeader: 'dio', 'common-header': 'xx'},
+// ));

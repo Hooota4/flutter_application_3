@@ -53,6 +53,10 @@ class _RealEstateDetailsScreenState extends ConsumerState<RealEstateDetailsScree
                                       style: Theme.of(context).textTheme.bodyLarge,
                                     ),
                                     Text(
+                                      "${realEstate.advertiser?.email}",
+                                      style: Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                    Text(
                                       "T: ${realEstate.advertiser?.phone} ",
                                       style: Theme.of(context).textTheme.bodyLarge,
                                     ),

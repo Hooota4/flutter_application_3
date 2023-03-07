@@ -20,7 +20,7 @@ final authCacheProvider = AutoDisposeNotifierProvider<AuthCache, Auth>.internal(
 );
 
 typedef _$AuthCache = AutoDisposeNotifier<Auth>;
-String _$authControllerHash() => r'c15f03b3ebbfbd5db7adcabf0aee3c8692e52896';
+String _$authControllerHash() => r'5e20d422f64462522a86a45c46a21fa669589d8e';
 
 /// See also [AuthController].
 @ProviderFor(AuthController)

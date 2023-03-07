@@ -55,7 +55,7 @@ class AuthController extends _$AuthController {
       try {
         final data = ResponseModel.fromJson(res.data);
 
-        final infoUser = User.fromJson(data.data!['userInfo'] as Map<String, dynamic>);
+        final infoUser = User.fromJson(data.data['userInfo'] as Map<String, dynamic>);
         state = Auth(token: data.data!['token'], isLoggedIn: true, user: infoUser);
         log(state.toString());
 

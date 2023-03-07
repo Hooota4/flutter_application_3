@@ -164,7 +164,7 @@ class _CreateAdvertisementState extends State<CreateAdvertisement> {
                                 onPressed: () async {
                                   images = (await showDialog(
                                         context: context,
-                                        builder: (context) => const ImagesUploader(title: "Real Estate Photos", imagesCount: 3),
+                                        builder: (context) => const ImagesUploader(title: "Real Estate Photos"),
                                       )) ??
                                       [];
                                   setState(() {});
